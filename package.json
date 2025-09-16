@@ -1,0 +1,26 @@
+{
+  "name": "quantum-brain-sync-website",
+  "version": "1.0.0",
+  "description": "Professional website for Quantum Brain Sync - AI research automation package",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "echo 'Static site - no build required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "ai",
+    "research",
+    "automation",
+    "quantum",
+    "brain-sync",
+    "data-processing"
+  ],
+  "author": "Quantum Brain Sync Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Worldwidebro/quantum-brain-sync-website.git"
+  },
+  "homepage": "https://quantum-brain-sync-website.vercel.app"
+}
