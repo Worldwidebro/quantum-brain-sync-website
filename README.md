@@ -137,3 +137,7 @@ For questions or support, please open an issue on GitHub.
 ---
 
 **Live Demo**: [https://quantum-brain-sync-website.vercel.app](https://quantum-brain-sync-website.vercel.app)
+
+---
+
+**Live Demo**: [https://quantum-brain-sync-website-gf1f.vercel.app](https://quantum-brain-sync-website-gf1f.vercel.app)
