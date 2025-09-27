@@ -1,0 +1,237 @@
+# 🎯 UNIFIED IZA OS ECOSYSTEM CONFIGURATION
+# ==========================================
+# Single source of truth for entire $13.5B+ ecosystem
+# Eliminates configuration fragmentation and conflicts
+
+ecosystem:
+  name: "IZA OS Enterprise"
+  version: "2.0.0"
+  value: "$13.5B+"
+  description: "Autonomous Venture Studio with AI-powered business operations"
+  owner: "Divine Johns"
+  last_updated: "2024-12-19"
+
+# Service definitions with intelligent port allocation
+services:
+  dashboard:
+    name: "MEMU Dashboard"
+    description: "Main ecosystem dashboard and monitoring"
+    port: 3004
+    health_path: "/health"
+    startup_command: "npm start -- --port 3004"
+    working_directory: "memu/super_design_dashboards"
+    dependencies: []
+    environment:
+      NODE_ENV: "production"
+      PORT: 3004
+    health_check:
+      endpoint: "/health"
+      timeout: 30
+      retries: 3
+
+  ai_boss:
+    name: "AI Boss Landing"
+    description: "AI Boss landing page and interface"
+    port: 5178
+    health_path: "/"
+    startup_command: "npm run dev -- --port 5178"
+    working_directory: "aibossoslandingpage"
+    dependencies: []
+    environment:
+      NODE_ENV: "development"
+      PORT: 5178
+    health_check:
+      endpoint: "/"
+      timeout: 30
+      retries: 3
+
+  n8n:
+    name: "N8N Workflows"
+    description: "Workflow automation and cron jobs"
+    port: 5679
+    health_path: "/health"
+    startup_command: "npx n8n start --port 5679"
+    working_directory: "."
+    dependencies: []
+    environment:
+      N8N_PORT: 5679
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: "admin"
+      N8N_BASIC_AUTH_PASSWORD: "${N8N_PASSWORD}"
+      N8N_ENCRYPTION_KEY: "${N8N_ENCRYPTION_KEY}"
+      WEBHOOK_URL: "https://iza-os-n8n.onrender.com"
+      GENERIC_TIMEZONE: "UTC"
+    health_check:
+      endpoint: "/health"
+      timeout: 45
+      retries: 5
+
+  ollama:
+    name: "Ollama AI"
+    description: "Local AI model server"
+    port: 11434
+    health_path: "/api/tags"
+    startup_command: "ollama serve --port 11434"
+    working_directory: "."
+    dependencies: []
+    environment:
+      OLLAMA_HOST: "0.0.0.0:11434"
+      OLLAMA_ORIGINS: "*"
+    health_check:
+      endpoint: "/api/tags"
+      timeout: 60
+      retries: 5
+
+  omnara:
+    name: "Omnara MCP"
+    description: "Model Context Protocol server"
+    port: 8080
+    health_path: "/health"
+    startup_command: "python3 -m omnara_mcp_server --port 8080"
+    working_directory: "."
+    dependencies: []
+    environment:
+      OMNARA_PORT: 8080
+      OMNARA_HOST: "0.0.0.0"
+    health_check:
+      endpoint: "/health"
+      timeout: 30
+      retries: 3
+
+  quant_finance:
+    name: "Quantitative Finance"
+    description: "Financial analytics and trading system"
+    port: 8086
+    health_path: "/health"
+    startup_command: "python3 quant_finance_service.py"
+    working_directory: "."
+    dependencies: []
+    environment:
+      GRADIO_SERVER_PORT: 8086
+      GRADIO_SERVER_HOST: "0.0.0.0"
+    health_check:
+      endpoint: "/health"
+      timeout: 30
+      retries: 3
+
+# Port allocation strategy
+port_management:
+  strategy: "intelligent_allocation"
+  reserved_ports: [3000, 3001, 3002, 3003, 8000, 8001, 8081, 8082, 9000]
+  port_range:
+    start: 3000
+    end: 9999
+  conflict_resolution: "kill_and_restart"
+
+# Service orchestration
+orchestration:
+  startup_order: ["dashboard", "ai_boss", "ollama", "omnara", "n8n", "quant_finance"]
+  startup_delay: 3
+  health_check_delay: 2
+  max_startup_time: 300
+  dependency_timeout: 60
+
+# Health monitoring
+monitoring:
+  enabled: true
+  check_interval: 30
+  alert_threshold: 2
+  recovery_attempts: 3
+  metrics:
+    enabled: true
+    endpoint: "/metrics"
+  logging:
+    level: "info"
+    format: "json"
+
+# Security configuration
+security:
+  cors:
+    enabled: true
+    origins: ["http://localhost:3004", "http://localhost:5178", "http://localhost:5679"]
+  authentication:
+    enabled: true
+    providers: ["basic", "jwt"]
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+
+# Deployment configuration
+deployment:
+  strategy: "rolling"
+  max_instances: 1
+  health_check_grace_period: 60
+  rollback_enabled: true
+  environment:
+    development:
+      log_level: "debug"
+      debug: true
+    production:
+      log_level: "info"
+      debug: false
+
+# Ecosystem integration
+integration:
+  webhooks:
+    enabled: true
+    endpoints:
+      - name: "ecosystem-health"
+        url: "/webhook/ecosystem-health"
+        method: "POST"
+      - name: "service-status"
+        url: "/webhook/service-status"
+        method: "POST"
+  
+  cronjobs:
+    enabled: true
+    schedules:
+      - name: "daily-ecosystem-check"
+        cron: "0 9 * * *"
+        webhook: "/webhook/ecosystem-health"
+      - name: "market-analysis"
+        cron: "0 6 * * 1-5"
+        webhook: "/webhook/market-analysis"
+      - name: "weekly-report"
+        cron: "0 8 * * 1"
+        webhook: "/webhook/weekly-report"
+
+# Business metrics
+metrics:
+  ecosystem_value: "$13.5B+"
+  components:
+    core_ai_platform: "$8.2B"
+    quantitative_finance: "$2.5B"
+    business_intelligence: "$1.2B"
+    automation_workflows: "$800M"
+    ai_models: "$200M"
+  
+  kpis:
+    uptime_target: "99.9%"
+    response_time_target: "<2s"
+    error_rate_target: "<0.1%"
+    throughput_target: "1000 req/min"
+
+# Backup and recovery
+backup:
+  enabled: true
+  schedule: "0 2 * * *"
+  retention: 30
+  locations:
+    - "local"
+    - "cloud"
+
+# Development settings
+development:
+  hot_reload: true
+  debug_mode: true
+  mock_services: false
+  test_data: true
+
+# Production settings
+production:
+  hot_reload: false
+  debug_mode: false
+  mock_services: false
+  test_data: false
+  ssl_enabled: true
+  compression_enabled: true

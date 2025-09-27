@@ -1,0 +1,5 @@
+{
+  "tests/test_integration.py": true,
+  "tests/test_performance.py": true,
+  "tests/test_unit.py": true
+}

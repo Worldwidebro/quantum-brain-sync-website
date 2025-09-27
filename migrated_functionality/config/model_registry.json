@@ -1,0 +1,11 @@
+{
+  "models": [
+    {
+      "name": "llama3-8b",
+      "type": "gguf",
+      "verified": true,
+      "memory_usage": "14.2GB",
+      "inference_speed": "124 tokens/sec"
+    }
+  ]
+}

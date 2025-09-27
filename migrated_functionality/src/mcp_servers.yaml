@@ -1,0 +1,196 @@
+# MCP Servers configuration - 15 servers total
+mcp_servers:
+  - name: "Activepieces MCP"
+    port: 8301
+    capability: "Workflow orchestration"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: []
+    restart_policy: "always"
+    integration_points: ["Workflow Engine", "Task Queue"]
+    description: "Orchestrates complex workflows and automations"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.9
+
+  - name: "Claude Flow MCP"
+    port: 8302
+    capability: "AI orchestration"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Claude API"]
+    restart_policy: "always"
+    integration_points: ["Agent Registry", "Workflow Engine"]
+    description: "Manages Claude AI agent coordination and flow"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.8
+
+  - name: "IZA OS Core MCP"
+    port: 8303
+    capability: "System orchestration"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: []
+    restart_policy: "always"
+    integration_points: ["All Systems"]
+    description: "Core system orchestration and management"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.9
+
+  - name: "GitHub Integration MCP"
+    port: 8304
+    capability: "Repository management"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["GitHub API"]
+    restart_policy: "always"
+    integration_points: ["Repository Manager", "CI/CD Systems"]
+    description: "GitHub repository management and CI/CD integration"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.7
+
+  - name: "Business Monetizer MCP"
+    port: 8305
+    capability: "Revenue optimization"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Financial Systems"]
+    restart_policy: "always"
+    integration_points: ["Business Portfolio Manager", "Financial Operations Agent"]
+    description: "Revenue optimization and monetization strategies"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.6
+
+  - name: "Revenue Tracker MCP"
+    port: 8306
+    capability: "Financial tracking"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Financial Systems", "Database"]
+    restart_policy: "always"
+    integration_points: ["Financial Operations Agent", "Analytics Engine"]
+    description: "Financial tracking and revenue monitoring"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.8
+
+  - name: "Analytics Engine MCP"
+    port: 8307
+    capability: "Data intelligence"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Database", "Data Sources"]
+    restart_policy: "always"
+    integration_points: ["Data Analytics Agent", "Business Intelligence"]
+    description: "Data analytics and business intelligence"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.5
+
+  - name: "Obsidian Integration MCP"
+    port: 8308
+    capability: "Knowledge management"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Obsidian API"]
+    restart_policy: "always"
+    integration_points: ["Research Agent", "Knowledge Base"]
+    description: "Obsidian knowledge base integration and management"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.7
+
+  - name: "Apple Notes MCP"
+    port: 8309
+    capability: "Note management"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Apple Notes API"]
+    restart_policy: "always"
+    integration_points: ["Content Processing Agent", "Note Systems"]
+    description: "Apple Notes integration and note management"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.6
+
+  - name: "Research Processing MCP"
+    port: 8310
+    capability: "Research automation"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Research APIs", "Data Sources"]
+    restart_policy: "always"
+    integration_points: ["Research Agent", "Content Processing Agent"]
+    description: "Research processing and automation"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.4
+
+  - name: "N8N Workflow MCP"
+    port: 8311
+    capability: "Workflow automation"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["N8N Platform"]
+    restart_policy: "always"
+    integration_points: ["Workflow Engine", "Automation Systems"]
+    description: "N8N workflow automation and management"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.8
+
+  - name: "Web Automation MCP"
+    port: 8312
+    capability: "Browser automation"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Browser APIs", "Web Services"]
+    restart_policy: "always"
+    integration_points: ["Web Automation Agent", "Browser Systems"]
+    description: "Web browser automation and site replication"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.3
+
+  - name: "Deployment MCP"
+    port: 8313
+    capability: "Deployment automation"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Deployment Platforms", "CI/CD Systems"]
+    restart_policy: "always"
+    integration_points: ["Repository Manager", "DevOps Systems"]
+    description: "Automated deployment and release management"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.7
+
+  - name: "GenixBank Core MCP"
+    port: 8314
+    capability: "Financial operations"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Banking APIs", "Financial Systems"]
+    restart_policy: "always"
+    integration_points: ["Financial Operations Agent", "Banking Systems"]
+    description: "Core financial operations and banking integration"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.9
+
+  - name: "Compliance Monitor MCP"
+    port: 8315
+    capability: "Compliance tracking"
+    status: "online"
+    health_check_endpoint: "/health"
+    dependencies: ["Compliance Systems", "Legal APIs"]
+    restart_policy: "always"
+    integration_points: ["Legal Agent", "Compliance Systems"]
+    description: "Compliance monitoring and tracking"
+    created_date: "2024-01-01"
+    last_health_check: null
+    uptime_percentage: 99.8

@@ -1,0 +1,37 @@
+{
+  "name": "notion",
+  "display_name": "Notion",
+  "description": "NOTION MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/notion-mcp-server:latest",
+    "port": 5093,
+    "environment": {
+      "SERVER_NAME": "NOTION",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/notion/callback"
+  },
+  "capabilities": [
+    "page_management",
+    "database_operations",
+    "content_creation"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "research_agent",
+      "planning_agent",
+      "rag_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

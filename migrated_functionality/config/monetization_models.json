@@ -1,0 +1,132 @@
+{
+  "agent_as_a_service": {
+    "name": "Agent-as-a-Service (AaaS)",
+    "description": "Sell specialized AI agents as cloud services",
+    "pricing_tiers": [
+      {
+        "name": "Starter",
+        "price": "$99/month",
+        "agents": 2,
+        "requests": 1000
+      },
+      {
+        "name": "Professional",
+        "price": "$299/month",
+        "agents": 5,
+        "requests": 5000
+      },
+      {
+        "name": "Enterprise",
+        "price": "$999/month",
+        "agents": "unlimited",
+        "requests": "unlimited"
+      }
+    ],
+    "target_market": "Startups, SMBs, Enterprises",
+    "revenue_model": "subscription"
+  },
+  "rag_api_service": {
+    "name": "RAG API Service",
+    "description": "Provide knowledge retrieval and context management APIs",
+    "pricing_tiers": [
+      {
+        "name": "Basic",
+        "price": "$49/month",
+        "documents": 1000,
+        "queries": 10000
+      },
+      {
+        "name": "Pro",
+        "price": "$199/month",
+        "documents": 10000,
+        "queries": 100000
+      },
+      {
+        "name": "Enterprise",
+        "price": "$799/month",
+        "documents": "unlimited",
+        "queries": "unlimited"
+      }
+    ],
+    "target_market": "Developers, Content Teams, Research Organizations",
+    "revenue_model": "usage_based"
+  },
+  "mlops_platform": {
+    "name": "MLOps Platform",
+    "description": "Complete MLOps platform for model lifecycle management",
+    "pricing_tiers": [
+      {
+        "name": "Developer",
+        "price": "$149/month",
+        "models": 5,
+        "experiments": 100
+      },
+      {
+        "name": "Team",
+        "price": "$499/month",
+        "models": 25,
+        "experiments": 1000
+      },
+      {
+        "name": "Organization",
+        "price": "$1999/month",
+        "models": "unlimited",
+        "experiments": "unlimited"
+      }
+    ],
+    "target_market": "Data Science Teams, ML Engineers, AI Companies",
+    "revenue_model": "subscription"
+  },
+  "context_engineering_templates": {
+    "name": "Context Engineering Templates",
+    "description": "Pre-built context templates and prompt libraries",
+    "pricing_tiers": [
+      {
+        "name": "Individual",
+        "price": "$29/month",
+        "templates": 50,
+        "domains": 5
+      },
+      {
+        "name": "Team",
+        "price": "$99/month",
+        "templates": 200,
+        "domains": 20
+      },
+      {
+        "name": "Enterprise",
+        "price": "$399/month",
+        "templates": "unlimited",
+        "domains": "unlimited"
+      }
+    ],
+    "target_market": "AI Engineers, Prompt Engineers, AI Consultants",
+    "revenue_model": "subscription"
+  },
+  "venture_studio_automation": {
+    "name": "Venture Studio Automation Suite",
+    "description": "Complete automation suite for venture studios",
+    "pricing_tiers": [
+      {
+        "name": "Startup Studio",
+        "price": "$499/month",
+        "companies": 5,
+        "workflows": 20
+      },
+      {
+        "name": "Growth Studio",
+        "price": "$1499/month",
+        "companies": 25,
+        "workflows": 100
+      },
+      {
+        "name": "Enterprise Studio",
+        "price": "$4999/month",
+        "companies": "unlimited",
+        "workflows": "unlimited"
+      }
+    ],
+    "target_market": "Venture Studios, Accelerators, Corporate Innovation",
+    "revenue_model": "subscription"
+  }
+}

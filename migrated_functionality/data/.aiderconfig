@@ -1,0 +1,26 @@
+[model]
+model = sonnet
+api_key = anthropic
+
+[codebase]
+include = memu/*
+include = memu/super_design_dashboards/*
+include = create_bot_ecosystem.py
+include = WORLDWIDEBRO_BOT_ECOSYSTEM_ROADMAP.md
+include = IZA_OS_AIDER_INTEGRATION.md
+include = WORLDWIDEBRO_ECOSYSTEM_INTEGRATION.md
+include = MEMU_IZA_OS_ECOSYSTEM_INTEGRATION_ANALYSIS.md
+exclude = memu/.venv/*
+exclude = node_modules/*
+
+[git]
+auto_commit = true
+commit_message_template = "feat(memu-iza-os): {description} - Bot ecosystem integration"
+
+[testing]
+auto_test = true
+test_command = python memu/super_design_dashboards/validate-dashboard.py
+
+[linting]
+auto_lint = true
+lint_command = flake8 --max-line-length=120

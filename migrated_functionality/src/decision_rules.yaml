@@ -1,0 +1,314 @@
+# Decision rules configuration for IZA OS orchestration system
+# Rule definitions for task routing, escalation, and workflow selection
+
+routing_rules:
+  # Agent routing based on task type
+  - rule_id: "route_data_tasks"
+    name: "Route Data Processing Tasks"
+    description: "Route data processing tasks to specialized data agents"
+    priority: 3
+    confidence_threshold: 0.8
+    enabled: true
+    conditions:
+      - field: "task.type"
+        operator: "equals"
+        value: "data_processing"
+      - field: "task.complexity"
+        operator: "in"
+        value: ["medium", "high"]
+    logical_operator: "and"
+    action:
+      action_type: "route_to_agent"
+      target: "data_processing_agent"
+      parameters:
+        task_type: "data_processing"
+        specialization: "etl"
+
+  - rule_id: "route_automation_tasks"
+    name: "Route Automation Tasks"
+    description: "Route automation tasks to automation agents"
+    priority: 2
+    confidence_threshold: 0.7
+    enabled: true
+    conditions:
+      - field: "task.category"
+        operator: "equals"
+        value: "automation"
+    logical_operator: "and"
+    action:
+      action_type: "route_to_agent"
+      target: "automation_agent"
+      parameters:
+        task_category: "automation"
+
+  - rule_id: "route_monitoring_tasks"
+    name: "Route Monitoring Tasks"
+    description: "Route monitoring and alerting tasks"
+    priority: 2
+    confidence_threshold: 0.7
+    enabled: true
+    conditions:
+      - field: "task.type"
+        operator: "equals"
+        value: "monitoring"
+    logical_operator: "and"
+    action:
+      action_type: "route_to_agent"
+      target: "monitoring_agent"
+      parameters:
+        task_type: "monitoring"
+
+escalation_rules:
+  # Escalation triggers
+  - rule_id: "escalate_critical_tasks"
+    name: "Escalate Critical Tasks"
+    description: "Escalate critical priority tasks to human review"
+    priority: 4
+    confidence_threshold: 0.9
+    enabled: true
+    conditions:
+      - field: "task.priority"
+        operator: "equals"
+        value: "critical"
+    logical_operator: "and"
+    action:
+      action_type: "escalate_to_human"
+      target: "human_reviewer"
+      parameters:
+        escalation_reason: "Critical priority task"
+        notification_channels: ["email", "slack"]
+
+  - rule_id: "escalate_compliance_tasks"
+    name: "Escalate Compliance Tasks"
+    description: "Escalate tasks requiring compliance review"
+    priority: 4
+    confidence_threshold: 0.9
+    enabled: true
+    conditions:
+      - field: "task.compliance_required"
+        operator: "equals"
+        value: true
+    logical_operator: "and"
+    action:
+      action_type: "escalate_to_human"
+      target: "compliance_reviewer"
+      parameters:
+        escalation_reason: "Compliance review required"
+        notification_channels: ["email", "dashboard_alert"]
+
+  - rule_id: "escalate_low_confidence"
+    name: "Escalate Low Confidence Decisions"
+    description: "Escalate when decision confidence is below threshold"
+    priority: 3
+    confidence_threshold: 0.6
+    enabled: true
+    conditions:
+      - field: "decision.confidence"
+        operator: "less_than"
+        value: 0.3
+    logical_operator: "and"
+    action:
+      action_type: "escalate_to_human"
+      target: "human_reviewer"
+      parameters:
+        escalation_reason: "Low confidence in automated decision"
+
+workflow_rules:
+  # N8N workflow selection
+  - rule_id: "execute_business_workflow"
+    name: "Execute Business Process Workflow"
+    description: "Execute business process workflows for business tasks"
+    priority: 2
+    confidence_threshold: 0.7
+    enabled: true
+    conditions:
+      - field: "task.category"
+        operator: "equals"
+        value: "business"
+      - field: "task.workflow_required"
+        operator: "equals"
+        value: true
+    logical_operator: "and"
+    action:
+      action_type: "execute_n8n_workflow"
+      target: "business_process_workflow"
+      parameters:
+        workflow_category: "business"
+        workflow_type: "process"
+
+  - rule_id: "execute_data_workflow"
+    name: "Execute Data Processing Workflow"
+    description: "Execute data processing workflows for data tasks"
+    priority: 2
+    confidence_threshold: 0.7
+    enabled: true
+    conditions:
+      - field: "task.type"
+        operator: "equals"
+        value: "data_processing"
+      - field: "task.workflow_required"
+        operator: "equals"
+        value: true
+    logical_operator: "and"
+    action:
+      action_type: "execute_n8n_workflow"
+      target: "data_processing_workflow"
+      parameters:
+        workflow_category: "data"
+        workflow_type: "etl"
+
+  - rule_id: "execute_monitoring_workflow"
+    name: "Execute Monitoring Workflow"
+    description: "Execute monitoring workflows for monitoring tasks"
+    priority: 2
+    confidence_threshold: 0.7
+    enabled: true
+    conditions:
+      - field: "task.type"
+        operator: "equals"
+        value: "monitoring"
+      - field: "task.workflow_required"
+        operator: "equals"
+        value: true
+    logical_operator: "and"
+    action:
+      action_type: "execute_n8n_workflow"
+      target: "monitoring_workflow"
+      parameters:
+        workflow_category: "monitoring"
+        workflow_type: "alert"
+
+swarm_rules:
+  # Swarm delegation
+  - rule_id: "delegate_complex_tasks"
+    name: "Delegate Complex Tasks to Swarm"
+    description: "Delegate complex tasks to specialized swarms"
+    priority: 2
+    confidence_threshold: 0.6
+    enabled: true
+    conditions:
+      - field: "task.complexity"
+        operator: "equals"
+        value: "high"
+      - field: "task.swarm_capable"
+        operator: "equals"
+        value: true
+    logical_operator: "and"
+    action:
+      action_type: "delegate_to_swarm"
+      target: "complex_task_swarm"
+      parameters:
+        swarm_type: "complex_processing"
+        max_agents: 5
+
+safety_rules:
+  # Safety and security rules
+  - rule_id: "block_dangerous_tasks"
+    name: "Block Dangerous Tasks"
+    description: "Block potentially dangerous or harmful tasks"
+    priority: 5
+    confidence_threshold: 0.9
+    enabled: true
+    conditions:
+      - field: "task.safety_level"
+        operator: "equals"
+        value: "dangerous"
+    logical_operator: "and"
+    action:
+      action_type: "escalate_to_human"
+      target: "security_reviewer"
+      parameters:
+        escalation_reason: "Potentially dangerous task detected"
+        notification_channels: ["email", "slack", "dashboard_alert"]
+
+  - rule_id: "require_approval_for_sensitive_data"
+    name: "Require Approval for Sensitive Data"
+    description: "Require human approval for tasks involving sensitive data"
+    priority: 4
+    confidence_threshold: 0.8
+    enabled: true
+    conditions:
+      - field: "task.data_sensitivity"
+        operator: "in"
+        value: ["high", "critical"]
+    logical_operator: "and"
+    action:
+      action_type: "escalate_to_human"
+      target: "data_privacy_reviewer"
+      parameters:
+        escalation_reason: "Sensitive data access requires approval"
+        notification_channels: ["email", "dashboard_alert"]
+
+fallback_rules:
+  # Fallback strategies
+  - rule_id: "fallback_to_general_agent"
+    name: "Fallback to General Agent"
+    description: "Fallback to general purpose agent when no specific match"
+    priority: 1
+    confidence_threshold: 0.3
+    enabled: true
+    conditions:
+      - field: "task.type"
+        operator: "not_in"
+        value: ["data_processing", "automation", "monitoring"]
+    logical_operator: "and"
+    action:
+      action_type: "route_to_agent"
+      target: "general_purpose_agent"
+      parameters:
+        fallback: true
+
+# Rule engine configuration
+rule_engine:
+  conflict_resolution: "priority_based"  # priority_based, confidence_based, manual
+  max_conflicts: 10
+  conflict_notification: true
+  rule_validation: true
+  performance_tracking: true
+  cache_enabled: true
+  cache_ttl: 300  # 5 minutes
+
+# ML policy configuration
+ml_policies:
+  enabled: true
+  confidence_threshold: 0.7
+  fallback_to_rules: true
+  learning_enabled: true
+  model_preference: "claude"  # claude, openai, auto
+  max_context_length: 4000
+  temperature: 0.3
+  max_tokens: 1000
+
+# Escalation configuration
+escalation:
+  enabled: true
+  default_timeout: 86400  # 24 hours
+  max_concurrent: 10
+  notifications_enabled: true
+  auto_approve_threshold: 0.9
+  notification_channels:
+    email:
+      enabled: true
+      recipients: ["admin@iza-os.com"]
+      template: "escalation_email_template"
+    slack:
+      enabled: true
+      recipients: ["#alerts"]
+      template: "escalation_slack_template"
+    dashboard_alert:
+      enabled: true
+      recipients: ["dashboard"]
+      template: "escalation_dashboard_template"
+    webhook:
+      enabled: false
+      webhook_url: null
+
+# Decision engine configuration
+decision_engine:
+  ml_confidence_threshold: 0.7
+  rule_priority_threshold: 2
+  escalation_threshold: 0.3
+  cache_ttl: 300  # 5 minutes
+  performance_tracking: true
+  audit_logging: true
+  decision_explanation: true

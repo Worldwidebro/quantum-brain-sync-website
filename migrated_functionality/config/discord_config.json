@@ -1,0 +1,37 @@
+{
+  "name": "discord",
+  "display_name": "Discord",
+  "description": "DISCORD MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/discord-mcp-server:latest",
+    "port": 5522,
+    "environment": {
+      "SERVER_NAME": "DISCORD",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "guilds",
+      "messages",
+      "webhooks"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/discord/callback"
+  },
+  "capabilities": [
+    "messaging",
+    "server_management",
+    "bot_operations"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "monitoring_agent",
+      "critic_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

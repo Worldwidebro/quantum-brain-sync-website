@@ -1,0 +1,25 @@
+
+# Perplexica Configuration for memU Ecosystem
+[general]
+name = "memU Perplexica"
+description = "AI-powered search engine for autonomous venture studio"
+
+[search]
+default_engine = "searxng"
+max_results = 10
+timeout = 30
+
+[llm]
+provider = "openai"
+model = "gpt-4"
+api_key = "${OPENAI_API_KEY}"
+api_url = "https://api.openai.com/v1"
+
+[searxng]
+url = "http://localhost:8080"
+enabled = true
+
+[embeddings]
+provider = "openai"
+model = "text-embedding-ada-002"
+api_key = "${OPENAI_API_KEY}"

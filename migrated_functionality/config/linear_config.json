@@ -1,0 +1,36 @@
+{
+  "name": "linear",
+  "display_name": "Linear",
+  "description": "LINEAR MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/linear-mcp-server:latest",
+    "port": 5966,
+    "environment": {
+      "SERVER_NAME": "LINEAR",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/linear/callback"
+  },
+  "capabilities": [
+    "issue_management",
+    "project_tracking",
+    "team_collaboration"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "planning_agent",
+      "execution_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

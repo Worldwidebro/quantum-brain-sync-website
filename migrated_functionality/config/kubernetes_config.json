@@ -1,0 +1,33 @@
+{
+  "name": "kubernetes",
+  "display_name": "Kubernetes",
+  "description": "KUBERNETES MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/kubernetes-mcp-server:latest",
+    "port": 5071,
+    "environment": {
+      "SERVER_NAME": "KUBERNETES",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/kubernetes/callback"
+  },
+  "capabilities": [
+    "basic_operations"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "research_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

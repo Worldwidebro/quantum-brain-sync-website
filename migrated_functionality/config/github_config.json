@@ -1,0 +1,38 @@
+{
+  "name": "github",
+  "display_name": "Github",
+  "description": "GITHUB MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/github-mcp-server:latest",
+    "port": 5937,
+    "environment": {
+      "SERVER_NAME": "GITHUB",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "repo",
+      "user",
+      "admin:org"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/github/callback"
+  },
+  "capabilities": [
+    "repository_management",
+    "issue_tracking",
+    "pull_requests",
+    "deployments"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "execution_agent",
+      "monitoring_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

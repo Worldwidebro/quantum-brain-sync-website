@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS + BMAD-METHOD Ecosystem Dashboard</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            background: rgba(255,255,255,0.95); 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 { 
+            color: #2c3e50; 
+            text-align: center; 
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 30px;
+        }
+        .status-card { 
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+            padding: 20px; 
+            border-radius: 10px; 
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .status-card.success { 
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+        }
+        .status-card.warning { 
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); 
+        }
+        .status-card h3 { 
+            margin-top: 0; 
+            font-size: 1.3em;
+        }
+        .metrics { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 30px;
+        }
+        .metric { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 15px; 
+            border-radius: 8px; 
+            color: white; 
+            text-align: center;
+        }
+        .metric-value { 
+            font-size: 2em; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+        }
+        .metric-label { 
+            font-size: 0.9em; 
+            opacity: 0.9;
+        }
+        .ventures-section { 
+            background: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px;
+        }
+        .ventures-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 15px; 
+            margin-top: 15px;
+        }
+        .venture-card { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .venture-card.foundation { 
+            border-left-color: #28a745; 
+        }
+        .venture-card.innovation { 
+            border-left-color: #007bff; 
+        }
+        .venture-card.relationship { 
+            border-left-color: #dc3545; 
+        }
+        .venture-card.knowledge { 
+            border-left-color: #ffc107; 
+        }
+        .actions { 
+            text-align: center; 
+            margin-top: 30px;
+        }
+        .btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 25px; 
+            margin: 0 10px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+        }
+        .footer { 
+            text-align: center; 
+            margin-top: 30px; 
+            color: #666; 
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 IZA OS + BMAD-METHOD Ecosystem</h1>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">$1.735B+</div>
+                <div class="metric-label">Ecosystem Value</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">82</div>
+                <div class="metric-label">Total Ventures</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">95%</div>
+                <div class="metric-label">Automation Level</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">7</div>
+                <div class="metric-label">AI Agents</div>
+            </div>
+        </div>
+
+        <div class="status-grid">
+            <div class="status-card success">
+                <h3>✅ IZA OS Backend</h3>
+                <p>Unified API running on port 8000</p>
+                <p>Status: Operational</p>
+            </div>
+            <div class="status-card success">
+                <h3>✅ BMAD-METHOD</h3>
+                <p>Breakthrough Method for Agile AI-Driven Development</p>
+                <p>Status: Integrated</p>
+            </div>
+            <div class="status-card success">
+                <h3>✅ Docker Services</h3>
+                <p>PostgreSQL, Redis, n8n running</p>
+                <p>Status: Operational</p>
+            </div>
+            <div class="status-card warning">
+                <h3>⚠️ Activepieces</h3>
+                <p>Embedded integration with workarounds</p>
+                <p>Status: Workaround Active</p>
+            </div>
+        </div>
+
+        <div class="ventures-section">
+            <h2>🏢 Venture Portfolio</h2>
+            <div class="ventures-grid">
+                <div class="venture-card foundation">
+                    <h4>Foundation Ventures (20)</h4>
+                    <p>Low risk, stable income streams</p>
+                    <ul>
+                        <li>Winners Circle Credit Repair</li>
+                        <li>WC Branding Studio</li>
+                        <li>Vending Machine Routes</li>
+                        <li>Storage Units</li>
+                    </ul>
+                </div>
+                <div class="venture-card innovation">
+                    <h4>Innovation Ventures (20)</h4>
+                    <p>Medium risk, emerging tech</p>
+                    <ul>
+                        <li>AutoBail Pro</li>
+                        <li>Forecaster AI</li>
+                        <li>AI Lodge Manager</li>
+                        <li>CultureFlow AI</li>
+                    </ul>
+                </div>
+                <div class="venture-card relationship">
+                    <h4>Relationship Ventures (20)</h4>
+                    <p>Community-driven, people-powered</p>
+                    <ul>
+                        <li>Angels in Daylight</li>
+                        <li>Luminary Worldwide Events</li>
+                        <li>Brotherhood Coaching</li>
+                        <li>Barbershop Franchise</li>
+                    </ul>
+                </div>
+                <div class="venture-card knowledge">
+                    <h4>Knowledge Ventures (22)</h4>
+                    <p>IP-driven, education-based</p>
+                    <ul>
+                        <li>Dropcourse.app</li>
+                        <li>AI Agency Playbooks</li>
+                        <li>Ai Boss University</li>
+                        <li>Publishing House</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="http://localhost:8000/docs" class="btn" target="_blank">API Documentation</a>
+            <a href="http://localhost:5678" class="btn" target="_blank">n8n Workflows</a>
+            <a href="http://localhost:5000/webhook/status" class="btn" target="_blank">Webhook Status</a>
+            <a href="#" class="btn" onclick="runBMADOrchestrator()">Run BMAD Orchestrator</a>
+        </div>
+
+        <div class="footer">
+            <p>IZA OS + BMAD-METHOD Integration | AI Boss Holdings | $1.735B+ Ecosystem Value</p>
+            <p>Powered by Breakthrough Method for Agile AI-Driven Development</p>
+        </div>
+    </div>
+
+    <script>
+        function runBMADOrchestrator() {
+            alert('BMAD Orchestrator would run here!\n\nThis would execute:\n• Agentic Planning\n• Context-Engineered Development\n• Venture Deployment\n• Ecosystem Orchestration');
+        }
+
+        // Auto-refresh status every 30 seconds
+        setInterval(() => {
+            console.log('Refreshing ecosystem status...');
+        }, 30000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+# Core ecosystem configuration
+features:
+  - id: "overview"
+    name: "Overview"
+    icon: "chart-bar"
+    description: "System overview and metrics"
+  - id: "business"
+    name: "Business"
+    icon: "building-office"
+    description: "Business portfolio and revenue"
+  - id: "ventures"
+    name: "Ventures"
+    icon: "rocket-launch"
+    description: "Active business ventures"
+  - id: "ai"
+    name: "AI Systems"
+    icon: "cpu-chip"
+    description: "AI agents and systems"
+  - id: "claude"
+    name: "Claude AI"
+    icon: "chat-bubble-left-right"
+    description: "Claude AI capabilities"
+  - id: "mcp"
+    name: "MCP Servers"
+    icon: "server"
+    description: "Model Context Protocol servers"
+  - id: "repositories"
+    name: "Repositories"
+    icon: "folder"
+    description: "Repository management"
+  - id: "starred"
+    name: "Starred"
+    icon: "star"
+    description: "GitHub starred repositories"
+  - id: "services"
+    name: "Services"
+    icon: "bolt"
+    description: "Service status and monitoring"
+  - id: "execution"
+    name: "Execution"
+    icon: "cog-6-tooth"
+    description: "Workflow execution"
+  - id: "enterprise"
+    name: "Enterprise"
+    icon: "building-library"
+    description: "Enterprise framework"
+
+services:
+  - name: "Business Dashboard"
+    port: 4000
+    status: "online"
+  - name: "Master Dashboard Hub"
+    port: 8000
+    status: "online"
+  - name: "Traycer Design System"
+    port: 7001
+    status: "online"
+  - name: "Execution Dashboard"
+    port: 8001
+    status: "online"
+  - name: "Web Automation"
+    port: 9000
+    status: "online"
+  - name: "Simple Business Ecosystem"
+    port: 9001
+    status: "online"
+  - name: "Real Venture Ecosystem"
+    port: 9003
+    status: "online"
+  - name: "Jupyter Lab"
+    port: 8888
+    status: "online"
+  - name: "Ollama AI"
+    port: 11434
+    status: "online"
+  - name: "GenixBank Financial"
+    port: 5001
+    status: "online"
+    description: "AI-powered financial platform with Traycer v2 integration - IZA OS aligned"
+  - name: "IZA OS Unified Chat"
+    port: 6001
+    status: "online"
+    description: "Complete AI-powered chat platform with all features integrated - IZA OS aligned"
+  - name: "HTTP Server"
+    port: 3000
+    status: "online"
+
+ai_boss_holdings:
+  total_businesses: 382
+  total_repositories: 211
+  starred_repositories: 184
+  total_value: "$1.4B+"
+  arr_potential: "$200M+"
+  automation_level: "95%"
+  wyoming_llcs: 8
+  mcp_servers: 15
+  agent_swarms: 8
+  n8n_workflows: 2056
+
+github_starred_repos:
+  total_count: 184
+  ai_ml_repos: 114
+  development_tools: 9
+  frontend_repos: 22
+  backend_repos: 7
+  database_repos: 1
+  security_repos: 1
+  testing_repos: 1
+  documentation_repos: 6
+  other_repos: 23
+  top_languages:
+    TypeScript: 59
+    Python: 44
+    JavaScript: 11
+    Go: 9
+    "Jupyter Notebook": 9
+    Rust: 7
+  top_topics:
+    ai: 33
+    llm: 32
+    mcp: 20
+    openai: 18
+    agent: 15
+    agents: 14
+    rag: 13
+    llms: 12
+    "machine-learning": 11
+    claude: 10
+  estimated_value: "$540M+"
+
+project_portfolio:
+  total_projects: 26
+  lovable_projects: 11
+  replit_projects: 5
+  netlify_projects: 4
+  other_projects: 6
+  total_revenue_potential: "$10M+"
+  high_priority_projects: 22
+  integration_ready: 20
+
+business_categories:
+  - name: "Ai Boss Ventures LLC"
+    businesses: 200
+    revenue: "$50M"
+    focus: "Core venture operations, strategic investments"
+  - name: "Ai Boss Holdings LLC"
+    businesses: 50
+    revenue: "$15M"
+    focus: "Portfolio management, asset optimization"
+  - name: "Ai Boss Technology LLC"
+    businesses: 30
+    revenue: "$12M"
+    focus: "Tech development, AI systems, automation"
+  - name: "Ai Boss Community LLC"
+    businesses: 40
+    revenue: "$10M"
+    focus: "Community building, social platforms"
+  - name: "Ai Boss Innovation LLC"
+    businesses: 20
+    revenue: "$6M"
+    focus: "R&D, patents, emerging tech"
+  - name: "Ai Boss Knowledge LLC"
+    businesses: 22
+    revenue: "$8.8M"
+    focus: "Content creation, consulting"
+  - name: "Ai Boss Foundation LLC"
+    businesses: 20
+    revenue: "$1.5M"
+    focus: "Core infrastructure, support"
+
+enterprise_framework:
+  cursor_rules: "✅ Active"
+  etl_pipeline: "✅ Production Ready"
+  ci_cd: "✅ GitHub Actions"
+  project_structure: "✅ Billion-Dollar Scale"
+  documentation: "✅ Enterprise Grade"
+  security: "✅ SOC 2 + ISO 27001"

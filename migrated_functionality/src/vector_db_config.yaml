@@ -1,0 +1,3 @@
+chroma:
+  chroma_db_impl: "duckdb+parquet"
+  persist_directory: "./venture_knowledge_base"

@@ -1,0 +1,37 @@
+{
+  "name": "slack",
+  "display_name": "Slack",
+  "description": "SLACK MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/slack-mcp-server:latest",
+    "port": 5664,
+    "environment": {
+      "SERVER_NAME": "SLACK",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "channels:read",
+      "chat:write",
+      "users:read"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/slack/callback"
+  },
+  "capabilities": [
+    "messaging",
+    "channel_management",
+    "user_management"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "monitoring_agent",
+      "critic_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

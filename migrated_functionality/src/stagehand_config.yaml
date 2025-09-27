@@ -1,0 +1,166 @@
+# IZA OS Stagehand UI Automation Configuration
+# Enterprise-grade configuration following McKinsey 7S framework
+
+# Browser Configuration
+browser:
+  headless: false
+  window_size: [1920, 1080]
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  chrome_options:
+    - "--no-sandbox"
+    - "--disable-dev-shm-usage"
+    - "--disable-gpu"
+    - "--disable-web-security"
+    - "--allow-running-insecure-content"
+    - "--disable-features=VizDisplayCompositor"
+    - "--disable-extensions"
+    - "--disable-plugins"
+    - "--disable-images"
+    - "--disable-javascript"
+    - "--no-first-run"
+    - "--no-default-browser-check"
+    - "--disable-default-apps"
+    - "--disable-popup-blocking"
+    - "--disable-translate"
+    - "--disable-background-timer-throttling"
+    - "--disable-renderer-backgrounding"
+    - "--disable-backgrounding-occluded-windows"
+  implicit_wait: 10
+  page_load_timeout: 30
+  script_timeout: 30
+
+# Automation Configuration
+automation:
+  default_timeout: 30
+  default_wait: 1.0
+  max_retry_attempts: 3
+  screenshot_on_error: true
+  screenshot_quality: 85
+  video_recording: false
+  parallel_execution: false
+  max_concurrent_sessions: 5
+  session_timeout: 3600  # 1 hour
+
+# Redis Configuration
+redis:
+  host: "localhost"
+  port: 6379
+  db: 1
+  password: "${REDIS_PASSWORD}"
+  max_connections: 20
+  socket_timeout: 5
+  socket_connect_timeout: 5
+  retry_on_timeout: true
+  decode_responses: true
+
+# Database Configuration
+database:
+  url: "postgresql://iza_user:iza_pass@localhost/iza_os_automation"
+  pool_size: 10
+  max_overflow: 20
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+# Security Configuration
+security:
+  jwt_secret: "${JWT_SECRET}"
+  jwt_algorithm: "HS256"
+  jwt_expiry_hours: 24
+  allowed_domains: []
+  blocked_domains:
+    - "malicious-site.com"
+    - "phishing-site.com"
+  content_filter_enabled: true
+  screenshot_encryption: true
+  audit_logging: true
+
+# Monitoring Configuration
+monitoring:
+  metrics_enabled: true
+  metrics_port: 8002
+  log_level: "INFO"
+  log_format: "json"
+  performance_monitoring: true
+  health_check_interval: 30
+  alerting_enabled: true
+
+# Cache Configuration
+cache:
+  workflow_ttl: 3600  # 1 hour
+  session_ttl: 86400  # 24 hours
+  screenshot_ttl: 7200  # 2 hours
+  max_cache_size: 10000
+  cache_cleanup_interval: 300
+
+# Business Logic Configuration
+business:
+  max_workflows_per_user: 50
+  max_actions_per_workflow: 100
+  max_execution_time: 1800  # 30 minutes
+  cost_tracking_enabled: true
+  usage_analytics_enabled: true
+  workflow_sharing_enabled: false
+
+# Integration Configuration
+integrations:
+  ai_workflow:
+    enabled: true
+    endpoint: "http://localhost:8004"
+    api_key: "${AI_WORKFLOW_API_KEY}"
+    
+  azis_learns_ai:
+    enabled: true
+    endpoint: "http://localhost:8002"
+    api_key: "${AZI_LEARNS_API_KEY}"
+
+# Quality Gates Configuration
+quality_gates:
+  test_coverage_minimum: 90
+  performance_threshold_ms: 1000
+  error_rate_threshold: 0.01
+  availability_threshold: 99.9
+  security_scan_enabled: true
+  workflow_validation: true
+
+# Compliance Configuration
+compliance:
+  gdpr_enabled: true
+  data_retention_days: 90
+  audit_logging: true
+  encryption_at_rest: true
+  encryption_in_transit: true
+  access_logging: true
+  screenshot_retention_days: 7
+
+# Performance Optimization
+performance:
+  element_finder_cache: true
+  screenshot_compression: true
+  parallel_action_execution: false
+  resource_cleanup_interval: 300
+  memory_limit_mb: 2048
+  cpu_limit_percent: 80
+
+# Error Handling
+error_handling:
+  retry_policy:
+    max_retries: 3
+    backoff_factor: 2
+    retry_on_timeout: true
+    retry_on_connection_error: true
+  
+  fallback_actions:
+    enabled: true
+    screenshot_on_failure: true
+    log_detailed_errors: true
+    notify_on_critical_failure: true
+
+# Testing Configuration
+testing:
+  headless_mode: true
+  test_data_path: "tests/data"
+  screenshot_path: "tests/screenshots"
+  mock_external_services: true
+  parallel_test_execution: true
+  test_timeout: 300

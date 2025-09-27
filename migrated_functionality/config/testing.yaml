@@ -1,0 +1,415 @@
+# Enterprise testing configuration for IZA OS Enterprise Platform
+# Test suite settings and execution parameters
+
+testing:
+  # General testing settings
+  service_name: "iza-os-testing"
+  test_execution_timeout: 300  # seconds
+  parallel_execution_limit: 10
+  
+  # Business test configuration
+  business_tests:
+    enabled: true
+    ace_businesses_total: 382
+    wyoming_llc_subsidiaries: 8
+    
+    # Test categories
+    test_categories:
+      operational:
+        enabled: true
+        timeout: 60
+        parallel_limit: 5
+        tests:
+          - "business_process_validation"
+          - "automation_workflow_testing"
+          - "integration_point_testing"
+      
+      financial:
+        enabled: true
+        timeout: 120
+        parallel_limit: 3
+        tests:
+          - "revenue_tracking_validation"
+          - "cost_analysis_testing"
+          - "roi_validation"
+      
+      compliance:
+        enabled: true
+        timeout: 180
+        parallel_limit: 2
+        tests:
+          - "wyoming_llc_requirements"
+          - "regulatory_compliance"
+          - "audit_readiness"
+      
+      performance:
+        enabled: true
+        timeout: 300
+        parallel_limit: 2
+        tests:
+          - "system_load_testing"
+          - "response_time_testing"
+          - "scalability_testing"
+    
+    # Test data sources
+    data_sources:
+      ecosystem_data_loader: true
+      business_registry: true
+      financial_systems: true
+      compliance_database: true
+    
+    # Test reporting
+    reporting:
+      enabled: true
+      formats: ["json", "html", "pdf"]
+      include_screenshots: true
+      include_logs: true
+      output_directory: "/tmp/business_test_reports"
+  
+  # Repository test configuration
+  repository_tests:
+    enabled: true
+    repositories_total: 211
+    
+    # Test categories
+    test_categories:
+      health:
+        enabled: true
+        timeout: 30
+        parallel_limit: 10
+        tests:
+          - "repository_accessibility"
+          - "dependency_validation"
+          - "security_scanning"
+      
+      integration:
+        enabled: true
+        timeout: 60
+        parallel_limit: 5
+        tests:
+          - "api_connectivity"
+          - "data_flow_validation"
+          - "service_communication"
+      
+      deployment:
+        enabled: true
+        timeout: 120
+        parallel_limit: 3
+        tests:
+          - "cicd_pipeline_validation"
+          - "deployment_success"
+          - "rollback_procedures"
+      
+      quality:
+        enabled: true
+        timeout: 90
+        parallel_limit: 5
+        tests:
+          - "code_coverage"
+          - "performance_benchmarks"
+          - "security_compliance"
+    
+    # Test data sources
+    data_sources:
+      github_starred_repositories: true
+      repository_health_diagnostic: true
+      ci_cd_pipelines: true
+      code_quality_tools: true
+    
+    # Test reporting
+    reporting:
+      enabled: true
+      formats: ["json", "html", "xml"]
+      include_coverage_reports: true
+      include_performance_metrics: true
+      output_directory: "/tmp/repository_test_reports"
+  
+  # Orchestration test configuration
+  orchestration_tests:
+    enabled: true
+    ai_agents_total: 50
+    swarms_total: 15
+    n8n_workflows_total: 2056
+    
+    # Test categories
+    test_categories:
+      agent:
+        enabled: true
+        timeout: 60
+        parallel_limit: 5
+        tests:
+          - "agent_functionality"
+          - "capability_validation"
+          - "performance_testing"
+      
+      swarm:
+        enabled: true
+        timeout: 90
+        parallel_limit: 3
+        tests:
+          - "swarm_coordination_logic"
+          - "task_distribution"
+          - "result_aggregation"
+      
+      workflow:
+        enabled: true
+        timeout: 120
+        parallel_limit: 3
+        tests:
+          - "workflow_execution_logic"
+          - "error_handling"
+          - "performance_testing"
+      
+      integration:
+        enabled: true
+        timeout: 180
+        parallel_limit: 2
+        tests:
+          - "mcp_communication"
+          - "memory_management"
+          - "api_operations"
+    
+    # Test data sources
+    data_sources:
+      orchestration_controller: true
+      memory_manager: true
+      workflow_engine: true
+      mcp_servers: true
+    
+    # Test reporting
+    reporting:
+      enabled: true
+      formats: ["json", "html", "csv"]
+      include_execution_logs: true
+      include_performance_metrics: true
+      output_directory: "/tmp/orchestration_test_reports"
+  
+  # CI/CD integration
+  cicd_integration:
+    enabled: true
+    
+    # Pipeline triggers
+    triggers:
+      on_commit: true
+      on_pull_request: true
+      on_schedule: true
+      on_manual: true
+    
+    # Test environments
+    environments:
+      development:
+        enabled: true
+        parallel_limit: 5
+        timeout_multiplier: 1.0
+      
+      staging:
+        enabled: true
+        parallel_limit: 3
+        timeout_multiplier: 1.5
+      
+      production:
+        enabled: false
+        parallel_limit: 1
+        timeout_multiplier: 2.0
+    
+    # Notification settings
+    notifications:
+      slack:
+        enabled: true
+        webhook_url: "${SLACK_WEBHOOK_URL}"
+        channel: "#testing"
+      
+      email:
+        enabled: true
+        smtp_server: "smtp.gmail.com"
+        smtp_port: 587
+        username: "tests@iza-os.com"
+        password: "${EMAIL_PASSWORD}"
+        recipients: ["qa@iza-os.com", "devops@iza-os.com"]
+  
+  # Performance testing
+  performance_testing:
+    enabled: true
+    
+    # Load testing
+    load_testing:
+      enabled: true
+      max_concurrent_users: 1000
+      ramp_up_duration: 300  # seconds
+      test_duration: 1800  # seconds
+      target_response_time: 200  # milliseconds
+    
+    # Stress testing
+    stress_testing:
+      enabled: true
+      max_concurrent_users: 2000
+      ramp_up_duration: 600  # seconds
+      test_duration: 3600  # seconds
+      failure_threshold: 0.05  # 5% failure rate
+    
+    # Chaos engineering
+    chaos_testing:
+      enabled: true
+      chaos_scenarios:
+        - "random_service_failure"
+        - "network_partition"
+        - "resource_exhaustion"
+        - "database_failure"
+    
+    # Performance benchmarks
+    benchmarks:
+      api_response_time: 100  # milliseconds
+      database_query_time: 50  # milliseconds
+      workflow_execution_time: 5  # seconds
+      dashboard_load_time: 2  # seconds
+  
+  # Test data management
+  test_data:
+    enabled: true
+    
+    # Data generation
+    data_generation:
+      enabled: true
+      business_data_count: 382
+      repository_data_count: 211
+      user_data_count: 1000
+      transaction_data_count: 10000
+    
+    # Data cleanup
+    data_cleanup:
+      enabled: true
+      cleanup_after_tests: true
+      retention_days: 7
+      cleanup_schedule: "0 2 * * *"  # Daily at 2 AM
+    
+    # Data privacy
+    data_privacy:
+      enabled: true
+      anonymize_personal_data: true
+      encrypt_sensitive_data: true
+      gdpr_compliant: true
+  
+  # Test reporting and analytics
+  reporting:
+    enabled: true
+    
+    # Report types
+    report_types:
+      test_execution_report:
+        enabled: true
+        frequency: "after_each_run"
+        format: "html"
+        include_screenshots: true
+      
+      test_coverage_report:
+        enabled: true
+        frequency: "daily"
+        format: "html"
+        include_trends: true
+      
+      performance_report:
+        enabled: true
+        frequency: "weekly"
+        format: "pdf"
+        include_benchmarks: true
+      
+      compliance_report:
+        enabled: true
+        frequency: "monthly"
+        format: "pdf"
+        include_audit_trail: true
+    
+    # Analytics
+    analytics:
+      enabled: true
+      track_test_trends: true
+      track_performance_metrics: true
+      track_failure_patterns: true
+      track_coverage_trends: true
+    
+    # Dashboard integration
+    dashboard:
+      enabled: true
+      real_time_updates: true
+      refresh_interval: 30  # seconds
+      widgets:
+        - "test_execution_status"
+        - "coverage_metrics"
+        - "performance_benchmarks"
+        - "failure_analysis"
+  
+  # Security testing
+  security_testing:
+    enabled: true
+    
+    # Security test categories
+    test_categories:
+      vulnerability_scanning:
+        enabled: true
+        tools: ["owasp_zap", "snyk", "sonarqube"]
+        frequency: "daily"
+      
+      penetration_testing:
+        enabled: true
+        frequency: "monthly"
+        scope: "all_systems"
+      
+      compliance_testing:
+        enabled: true
+        standards: ["owasp_top_10", "pci_dss", "sox"]
+        frequency: "quarterly"
+    
+    # Security reporting
+    security_reporting:
+      enabled: true
+      formats: ["json", "html", "pdf"]
+      include_remediation_guidance: true
+      severity_threshold: "medium"
+  
+  # Test automation
+  automation:
+    enabled: true
+    
+    # Automated test execution
+    automated_execution:
+      enabled: true
+      schedule: "0 */6 * * *"  # Every 6 hours
+      retry_failed_tests: true
+      max_retries: 3
+    
+    # Test maintenance
+    test_maintenance:
+      enabled: true
+      auto_update_tests: true
+      deprecated_test_cleanup: true
+      test_optimization: true
+    
+    # Self-healing tests
+    self_healing:
+      enabled: true
+      auto_fix_selectors: true
+      auto_retry_flaky_tests: true
+      adaptive_wait_times: true
+  
+  # Performance settings
+  performance:
+    max_tests_per_execution: 1000
+    max_parallel_executions: 20
+    test_timeout_multiplier: 1.5
+    memory_limit_per_test: "512MB"
+    cpu_limit_per_test: "0.5"
+  
+  # Security settings
+  security:
+    enable_authentication: true
+    api_key_header: "X-API-Key"
+    rate_limiting:
+      enabled: true
+      requests_per_minute: 100
+      burst_size: 20
+    
+    # Test data security
+    test_data_security:
+      encrypt_test_data: true
+      anonymize_personal_data: true
+      secure_test_environments: true

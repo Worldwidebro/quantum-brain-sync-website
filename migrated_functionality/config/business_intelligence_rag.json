@@ -1,0 +1,15 @@
+{
+  "name": "business_intelligence_rag",
+  "vector_db": "pinecone",
+  "embedding_model": "text-embedding-ada-002",
+  "retrieval_strategy": "dense",
+  "chunk_size": 2000,
+  "overlap": 400,
+  "sources": [
+    "market_data",
+    "financial_reports",
+    "business_plans",
+    "analytics"
+  ],
+  "fusion_method": "max_similarity"
+}

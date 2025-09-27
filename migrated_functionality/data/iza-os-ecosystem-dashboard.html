@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS Ecosystem Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-6xl font-bold text-white mb-4">
+                IZA OS Ecosystem Dashboard
+            </h1>
+            <p class="text-xl text-gray-200">
+                Complete File & Folder Management System
+            </p>
+        </header>
+        
+        <!-- Overview Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="glass-morphism rounded-lg p-6 text-center hover-glow transition-all duration-300">
+                <div class="text-3xl font-bold text-white">68</div>
+                <div class="text-gray-300">Total Files</div>
+            </div>
+            <div class="glass-morphism rounded-lg p-6 text-center hover-glow transition-all duration-300">
+                <div class="text-3xl font-bold text-white">42</div>
+                <div class="text-gray-300">Total Folders</div>
+            </div>
+            <div class="glass-morphism rounded-lg p-6 text-center hover-glow transition-all duration-300">
+                <div class="text-3xl font-bold text-white">981.3 KB</div>
+                <div class="text-gray-300">Total Size</div>
+            </div>
+            <div class="glass-morphism rounded-lg p-6 text-center hover-glow transition-all duration-300">
+                <div class="text-3xl font-bold text-white">9</div>
+                <div class="text-gray-300">Languages</div>
+            </div>
+        </div>
+        
+        <!-- Language Distribution -->
+        <div class="glass-morphism rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-white mb-4">Language Distribution</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Python</div>
+                    <div class="text-sm text-gray-300">9 files (13.2%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 13.23529411764706%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">JSON</div>
+                    <div class="text-sm text-gray-300">16 files (23.5%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 23.52941176470588%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Markdown</div>
+                    <div class="text-sm text-gray-300">7 files (10.3%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 10.294117647058822%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">JavaScript</div>
+                    <div class="text-sm text-gray-300">13 files (19.1%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 19.11764705882353%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">HTML</div>
+                    <div class="text-sm text-gray-300">2 files (2.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 2.941176470588235%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">YAML</div>
+                    <div class="text-sm text-gray-300">1 files (1.5%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 1.4705882352941175%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Unknown</div>
+                    <div class="text-sm text-gray-300">1 files (1.5%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 1.4705882352941175%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">CSS</div>
+                    <div class="text-sm text-gray-300">2 files (2.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 2.941176470588235%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">TypeScript</div>
+                    <div class="text-sm text-gray-300">17 files (25.0%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 25.0%"></div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <!-- Category Distribution -->
+        <div class="glass-morphism rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-white mb-4">Category Distribution</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Core System Files</div>
+                    <div class="text-sm text-gray-300">7 files (10.3%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 10.294117647058822%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">System Integrations</div>
+                    <div class="text-sm text-gray-300">2 files (2.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 2.941176470588235%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Configuration Files</div>
+                    <div class="text-sm text-gray-300">2 files (2.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 2.941176470588235%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Schema Definitions</div>
+                    <div class="text-sm text-gray-300">2 files (2.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 2.941176470588235%"></div>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4">
+                    <div class="text-lg font-semibold text-white">Dashboard Components</div>
+                    <div class="text-sm text-gray-300">55 files (80.9%)</div>
+                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 80.88235294117648%"></div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <!-- File Management -->
+        <div class="glass-morphism rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-white mb-4">File Management</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-white">
+                    <thead>
+                        <tr class="border-b border-white/20">
+                            <th class="text-left py-3 px-4">Name</th>
+                            <th class="text-left py-3 px-4">Language</th>
+                            <th class="text-left py-3 px-4">Category</th>
+                            <th class="text-left py-3 px-4">Status</th>
+                            <th class="text-left py-3 px-4">Size</th>
+                            <th class="text-left py-3 px-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">logging.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">28.8 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('logging.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('logging.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">test_integration_complete.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">System Integrations</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">22.6 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('test_integration_complete.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('test_integration_complete.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">config_manager.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Configuration Files</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">19.8 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('config_manager.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('config_manager.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">database_models.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Schema Definitions</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">21.4 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('database_models.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('database_models.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">memory_storage_manager.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">22.3 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('memory_storage_manager.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('memory_storage_manager.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">__init__.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">7.1 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('__init__.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('__init__.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">complete_n8n_workflow_integration.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">System Integrations</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">45.4 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('complete_n8n_workflow_integration.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('complete_n8n_workflow_integration.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">alignment_categories.json</td>
+                            <td class="py-3 px-4">JSON</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">5.7 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('alignment_categories.json')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('alignment_categories.json')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">ALIGNMENT_REPORT.md</td>
+                            <td class="py-3 px-4">Markdown</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">1.3 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('ALIGNMENT_REPORT.md')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('ALIGNMENT_REPORT.md')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">alignment_nodes.json</td>
+                            <td class="py-3 px-4">JSON</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">31.8 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('alignment_nodes.json')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('alignment_nodes.json')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">FINAL_PROJECT_COMPLETION_CERTIFICATE.md</td>
+                            <td class="py-3 px-4">Markdown</td>
+                            <td class="py-3 px-4">Core System Files</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">7.5 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('FINAL_PROJECT_COMPLETION_CERTIFICATE.md')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('FINAL_PROJECT_COMPLETION_CERTIFICATE.md')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">logging-config.json</td>
+                            <td class="py-3 px-4">JSON</td>
+                            <td class="py-3 px-4">Configuration Files</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">5.5 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('logging-config.json')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('logging-config.json')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">integrate-search.js</td>
+                            <td class="py-3 px-4">JavaScript</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-red-400">needs_migration</td>
+                            <td class="py-3 px-4">17.0 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/integrate-search.js')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/integrate-search.js')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">modern-search-implementation.js</td>
+                            <td class="py-3 px-4">JavaScript</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-red-400">needs_migration</td>
+                            <td class="py-3 px-4">29.6 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/modern-search-implementation.js')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/modern-search-implementation.js')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">tsconfig.node.json</td>
+                            <td class="py-3 px-4">JSON</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-blue-400">config</td>
+                            <td class="py-3 px-4">253.0 B</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/tsconfig.node.json')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/tsconfig.node.json')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">validate-dashboard.py</td>
+                            <td class="py-3 px-4">Python</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-yellow-400">legacy</td>
+                            <td class="py-3 px-4">20.5 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/validate-dashboard.py')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/validate-dashboard.py')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">index.html</td>
+                            <td class="py-3 px-4">HTML</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-gray-400">unknown</td>
+                            <td class="py-3 px-4">6.4 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/index.html')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/index.html')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">tailwind.config.js</td>
+                            <td class="py-3 px-4">JavaScript</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-red-400">needs_migration</td>
+                            <td class="py-3 px-4">3.2 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/tailwind.config.js')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/tailwind.config.js')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">automation-bot-integration.js</td>
+                            <td class="py-3 px-4">JavaScript</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-red-400">needs_migration</td>
+                            <td class="py-3 px-4">3.3 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/automation-bot-integration.js')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/automation-bot-integration.js')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                        <tr class="border-b border-white/10 hover:bg-white/5">
+                            <td class="py-3 px-4">dashboard-monitoring-integration.js</td>
+                            <td class="py-3 px-4">JavaScript</td>
+                            <td class="py-3 px-4">Dashboard Components</td>
+                            <td class="py-3 px-4 text-red-400">needs_migration</td>
+                            <td class="py-3 px-4">27.8 KB</td>
+                            <td class="py-3 px-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2" onclick="viewFile('super_design_dashboards/dashboard-monitoring-integration.js')">View</button>
+                                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm" onclick="migrateFile('super_design_dashboards/dashboard-monitoring-integration.js')">Migrate</button>
+                            </td>
+                        </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Folder Management -->
+        <div class="glass-morphism rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-white mb-4">Folder Management</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">.traycer</h3>
+                        <span class="text-sm text-gray-300">0 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Core System Files</div>
+                    <div class="text-sm text-gray-300 mb-3">0 B</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('.traycer')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('.traycer')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">super_design_dashboards</h3>
+                        <span class="text-sm text-gray-300">35 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">666.2 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">schemas</h3>
+                        <span class="text-sm text-gray-300">1 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Schema Definitions</div>
+                    <div class="text-sm text-gray-300 mb-3">16.7 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('schemas')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('schemas')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">memu</h3>
+                        <span class="text-sm text-gray-300">0 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Core System Files</div>
+                    <div class="text-sm text-gray-300 mb-3">0 B</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('memu')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('memu')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">prompt-templates</h3>
+                        <span class="text-sm text-gray-300">0 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Core System Files</div>
+                    <div class="text-sm text-gray-300 mb-3">0 B</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('.traycer/prompt-templates')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('.traycer/prompt-templates')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">config</h3>
+                        <span class="text-sm text-gray-300">4 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">6.7 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/config')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/config')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">src</h3>
+                        <span class="text-sm text-gray-300">3 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">10.9 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">test</h3>
+                        <span class="text-sm text-gray-300">1 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">1.6 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src/test')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src/test')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">utils</h3>
+                        <span class="text-sm text-gray-300">2 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">14.7 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src/utils')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src/utils')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">components</h3>
+                        <span class="text-sm text-gray-300">7 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">32.2 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src/components')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src/components')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">hooks</h3>
+                        <span class="text-sm text-gray-300">1 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">5.6 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src/hooks')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src/hooks')">Organize</button>
+                    </div>
+                </div>
+            
+                <div class="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-semibold text-white">ui</h3>
+                        <span class="text-sm text-gray-300">1 files</span>
+                    </div>
+                    <div class="text-sm text-gray-300 mb-2">Dashboard Components</div>
+                    <div class="text-sm text-gray-300 mb-3">1.1 KB</div>
+                    <div class="flex space-x-2">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm" onclick="viewFolder('super_design_dashboards/src/components/ui')">View</button>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm" onclick="organizeFolder('super_design_dashboards/src/components/ui')">Organize</button>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <!-- Actions Panel -->
+        <div class="glass-morphism rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-white mb-4">Ecosystem Actions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="executeTranslation()">
+                    Execute Translation
+                </button>
+                <button class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="organizeEcosystem()">
+                    Organize Ecosystem
+                </button>
+                <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="deployEcosystem()">
+                    Deploy Ecosystem
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function viewFile(path) {
+            alert('Viewing file: ' + path);
+            // Implement file viewing logic
+        }
+        
+        function migrateFile(path) {
+            alert('Migrating file: ' + path);
+            // Implement file migration logic
+        }
+        
+        function viewFolder(path) {
+            alert('Viewing folder: ' + path);
+            // Implement folder viewing logic
+        }
+        
+        function organizeFolder(path) {
+            alert('Organizing folder: ' + path);
+            // Implement folder organization logic
+        }
+        
+        function executeTranslation() {
+            alert('Executing complete translation and reorganization...');
+            // Implement translation execution
+        }
+        
+        function organizeEcosystem() {
+            alert('Organizing entire ecosystem...');
+            // Implement ecosystem organization
+        }
+        
+        function deployEcosystem() {
+            alert('Deploying ecosystem...');
+            // Implement ecosystem deployment
+        }
+    </script>
+</body>
+</html>
+        

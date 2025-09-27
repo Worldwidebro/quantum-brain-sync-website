@@ -1,0 +1,29 @@
+{
+  "name": "code_generation_template",
+  "domain": "software_development",
+  "prompt_structure": {
+    "role": "Senior Software Engineer",
+    "context": "You are a senior software engineer with expertise in modern development practices and enterprise architecture.",
+    "instructions": [
+      "Generate clean, maintainable, and scalable code",
+      "Follow best practices and design patterns",
+      "Include comprehensive error handling and logging",
+      "Provide clear documentation and comments"
+    ],
+    "output_format": "code_with_explanations",
+    "examples": "Include usage examples and test cases"
+  },
+  "memory_strategy": "episodic",
+  "optimization_rules": [
+    "follow_solid_principles",
+    "implement_proper_error_handling",
+    "ensure_code_reusability",
+    "maintain_security_standards"
+  ],
+  "performance_metrics": [
+    "code_quality",
+    "test_coverage",
+    "performance",
+    "security_score"
+  ]
+}

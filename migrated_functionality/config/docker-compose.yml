@@ -1,0 +1,211 @@
+version: '3.8'
+
+services:
+  # Tier 1 - Core Business Platforms
+  billionaire-consciousness-empire:
+    build: ./tier1-core-platforms/billionaire-consciousness-empire
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - TIER=tier1
+      - PLATFORM=billionaire-consciousness-empire
+    volumes:
+      - ./tier1-core-platforms/billionaire-consciousness-empire:/app
+    networks:
+      - iza-ecosystem
+
+  iza-enterprise-platform:
+    build: ./tier1-core-platforms/iza-enterprise-platform
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - TIER=tier1
+      - PLATFORM=iza-enterprise-platform
+    volumes:
+      - ./tier1-core-platforms/iza-enterprise-platform:/app
+    networks:
+      - iza-ecosystem
+
+  worldwidebro-integration:
+    build: ./tier1-core-platforms/worldwidebro-integration
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+      - TIER=tier1
+      - PLATFORM=worldwidebro-integration
+    volumes:
+      - ./tier1-core-platforms/worldwidebro-integration:/app
+    networks:
+      - iza-ecosystem
+
+  genix-bank:
+    build: ./tier1-core-platforms/genix-bank
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - TIER=tier1
+      - PLATFORM=genix-bank
+    volumes:
+      - ./tier1-core-platforms/genix-bank:/app
+    networks:
+      - iza-ecosystem
+
+  ai-boss-holdings:
+    build: ./tier1-core-platforms/ai-boss-holdings
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=production
+      - PORT=3004
+      - TIER=tier1
+      - PLATFORM=ai-boss-holdings
+    volumes:
+      - ./tier1-core-platforms/ai-boss-holdings:/app
+    networks:
+      - iza-ecosystem
+
+  avs-478:
+    build: ./tier1-core-platforms/avs-478
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=production
+      - PORT=3005
+      - TIER=tier1
+      - PLATFORM=avs-478
+    volumes:
+      - ./tier1-core-platforms/avs-478:/app
+    networks:
+      - iza-ecosystem
+
+  # Tier 2 - AI Agent Ecosystem
+  agent-maestro-os:
+    build: ./tier2-ai-agents/agent-maestro-os
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+      - TIER=tier2
+      - PLATFORM=agent-maestro-os
+    volumes:
+      - ./tier2-ai-agents/agent-maestro-os:/app
+    networks:
+      - iza-ecosystem
+
+  agent-orchestra:
+    build: ./tier2-ai-agents/agent-orchestra
+    ports:
+      - "3011:3011"
+    environment:
+      - NODE_ENV=production
+      - PORT=3011
+      - TIER=tier2
+      - PLATFORM=agent-orchestra
+    volumes:
+      - ./tier2-ai-agents/agent-orchestra:/app
+    networks:
+      - iza-ecosystem
+
+  consciousness-os:
+    build: ./tier2-ai-agents/consciousness-os
+    ports:
+      - "3012:3012"
+    environment:
+      - NODE_ENV=production
+      - PORT=3012
+      - TIER=tier2
+      - PLATFORM=consciousness-os
+    volumes:
+      - ./tier2-ai-agents/consciousness-os:/app
+    networks:
+      - iza-ecosystem
+
+  # Tier 3 - Platform Integration
+  activepieces:
+    build: ./tier3-platform-integration/activepieces
+    ports:
+      - "3020:3020"
+    environment:
+      - NODE_ENV=production
+      - PORT=3020
+      - TIER=tier3
+      - PLATFORM=activepieces
+    volumes:
+      - ./tier3-platform-integration/activepieces:/app
+    networks:
+      - iza-ecosystem
+
+  n8n:
+    build: ./tier3-platform-integration/n8n
+    ports:
+      - "3021:3021"
+    environment:
+      - NODE_ENV=production
+      - PORT=3021
+      - TIER=tier3
+      - PLATFORM=n8n
+    volumes:
+      - ./tier3-platform-integration/n8n:/app
+    networks:
+      - iza-ecosystem
+
+  # Tier 4 - Specialized Platforms
+  ai-chief:
+    build: ./tier4-specialized-platforms/ai-chief
+    ports:
+      - "3030:3030"
+    environment:
+      - NODE_ENV=production
+      - PORT=3030
+      - TIER=tier4
+      - PLATFORM=ai-chief
+    volumes:
+      - ./tier4-specialized-platforms/ai-chief:/app
+    networks:
+      - iza-ecosystem
+
+  unified-consciousness:
+    build: ./tier4-specialized-platforms/unified-consciousness
+    ports:
+      - "3031:3031"
+    environment:
+      - NODE_ENV=production
+      - PORT=3031
+      - TIER=tier4
+      - PLATFORM=unified-consciousness
+    volumes:
+      - ./tier4-specialized-platforms/unified-consciousness:/app
+    networks:
+      - iza-ecosystem
+
+  # Supporting Services
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - iza-ecosystem
+
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=iza_ecosystem
+      - POSTGRES_USER=iza_user
+      - POSTGRES_PASSWORD=iza_secure_password
+    networks:
+      - iza-ecosystem
+
+networks:
+  iza-ecosystem:
+    driver: bridge

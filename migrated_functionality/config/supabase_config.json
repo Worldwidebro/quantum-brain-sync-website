@@ -1,0 +1,36 @@
+{
+  "name": "supabase",
+  "display_name": "Supabase",
+  "description": "SUPABASE MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/supabase-mcp-server:latest",
+    "port": 5104,
+    "environment": {
+      "SERVER_NAME": "SUPABASE",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/supabase/callback"
+  },
+  "capabilities": [
+    "database_operations",
+    "authentication",
+    "storage"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "rag_agent",
+      "execution_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

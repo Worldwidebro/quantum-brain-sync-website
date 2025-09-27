@@ -1,0 +1,295 @@
+# Monitoring configuration for IZA OS Enterprise Platform
+# Comprehensive settings for telemetry, metrics, tracing, and alerting
+
+monitoring:
+  # General monitoring settings
+  service_name: "iza-os-ecosystem"
+  monitoring_interval: 30  # seconds
+  data_retention_days: 30
+  
+  # Telemetry configuration
+  telemetry:
+    enabled: true
+    correlation_id_header: "X-Correlation-ID"
+    service_version: "1.0.0"
+    deployment_environment: "production"
+    
+    # OpenTelemetry settings
+    opentelemetry:
+      enabled: true
+      service_name: "iza-os-ecosystem"
+      service_version: "1.0.0"
+      resource_attributes:
+        deployment.environment: "production"
+        service.namespace: "iza-os"
+    
+    # Exporters
+    exporters:
+      prometheus:
+        enabled: true
+        port: 9090
+        path: "/metrics"
+      
+      jaeger:
+        enabled: true
+        agent_host: "localhost"
+        agent_port: 6831
+        service_name: "iza-os-ecosystem"
+      
+      json:
+        enabled: true
+        output_file: "/tmp/telemetry.json"
+  
+  # Metrics configuration
+  metrics:
+    enabled: true
+    collection_interval: 30  # seconds
+    
+    # Custom metrics
+    custom_metrics:
+      - name: "agent_operations_total"
+        type: "counter"
+        description: "Total number of agent operations"
+        labels: ["agent_id", "operation_type"]
+      
+      - name: "task_queue_size"
+        type: "gauge"
+        description: "Current size of task queue"
+        labels: ["queue_type"]
+      
+      - name: "workflow_execution_time"
+        type: "histogram"
+        description: "Workflow execution time in milliseconds"
+        labels: ["workflow_id", "workflow_type"]
+        buckets: [100, 500, 1000, 2000, 5000]
+      
+      - name: "memory_usage_bytes"
+        type: "gauge"
+        description: "Memory usage in bytes"
+        labels: ["memory_type"]
+      
+      - name: "api_request_duration"
+        type: "histogram"
+        description: "API request duration in milliseconds"
+        labels: ["endpoint", "method", "status_code"]
+        buckets: [50, 100, 200, 500, 1000, 2000]
+    
+    # System metrics
+    system_metrics:
+      enabled: true
+      cpu_usage: true
+      memory_usage: true
+      disk_usage: true
+      network_io: true
+      load_average: true
+    
+    # Business metrics
+    business_metrics:
+      enabled: true
+      ace_businesses_total: true
+      business_revenue_total: true
+      automation_level_percent: true
+      compliance_score: true
+    
+    # Repository metrics
+    repository_metrics:
+      enabled: true
+      repositories_total: true
+      repository_commits_total: true
+      deployment_success_rate: true
+      code_coverage_percent: true
+  
+  # Tracing configuration
+  tracing:
+    enabled: true
+    sampling_rate: 0.1  # 10% sampling
+    
+    # Trace categories
+    trace_categories:
+      orchestration:
+        enabled: true
+        sampling_rate: 0.2
+      
+      api:
+        enabled: true
+        sampling_rate: 0.1
+      
+      memory:
+        enabled: true
+        sampling_rate: 0.05
+      
+      integration:
+        enabled: true
+        sampling_rate: 0.15
+    
+    # Jaeger configuration
+    jaeger:
+      enabled: true
+      agent_host: "localhost"
+      agent_port: 6831
+      service_name: "iza-os-ecosystem"
+      tags:
+        environment: "production"
+        version: "1.0.0"
+  
+  # Alerting configuration
+  alerting:
+    enabled: true
+    check_interval: 60  # seconds
+    
+    # Alert rules
+    alert_rules:
+      # System alerts
+      high_cpu_usage:
+        enabled: true
+        metric_name: "cpu_usage_percent"
+        threshold: 80.0
+        operator: ">"
+        severity: "high"
+        cooldown_minutes: 5
+        notification_channels: ["email", "slack"]
+      
+      high_memory_usage:
+        enabled: true
+        metric_name: "memory_usage_bytes"
+        threshold: 0.9  # 90% of total memory
+        operator: ">"
+        severity: "high"
+        cooldown_minutes: 5
+        notification_channels: ["email", "slack"]
+      
+      disk_space_low:
+        enabled: true
+        metric_name: "disk_usage_percent"
+        threshold: 85.0
+        operator: ">"
+        severity: "medium"
+        cooldown_minutes: 15
+        notification_channels: ["email"]
+      
+      # Orchestration alerts
+      agent_failures:
+        enabled: true
+        metric_name: "orchestration_errors_total"
+        threshold: 10.0
+        operator: ">"
+        severity: "critical"
+        cooldown_minutes: 2
+        notification_channels: ["email", "slack", "pagerduty"]
+      
+      task_queue_backlog:
+        enabled: true
+        metric_name: "task_queue_size"
+        threshold: 1000.0
+        operator: ">"
+        severity: "medium"
+        cooldown_minutes: 10
+        notification_channels: ["slack"]
+      
+      # Business alerts
+      compliance_violations:
+        enabled: true
+        metric_name: "compliance_violations_total"
+        threshold: 0.0
+        operator: ">"
+        severity: "critical"
+        cooldown_minutes: 1
+        notification_channels: ["email", "slack", "pagerduty"]
+      
+      low_automation_level:
+        enabled: true
+        metric_name: "automation_level_percent"
+        threshold: 90.0
+        operator: "<"
+        severity: "medium"
+        cooldown_minutes: 30
+        notification_channels: ["email"]
+      
+      # Security alerts
+      security_vulnerabilities:
+        enabled: true
+        metric_name: "security_vulnerabilities_total"
+        threshold: 0.0
+        operator: ">"
+        severity: "high"
+        cooldown_minutes: 5
+        notification_channels: ["email", "slack", "pagerduty"]
+    
+    # Notification channels
+    notification_channels:
+      email:
+        enabled: true
+        smtp_server: "smtp.gmail.com"
+        smtp_port: 587
+        username: "alerts@iza-os.com"
+        password: "${EMAIL_PASSWORD}"
+        from_address: "alerts@iza-os.com"
+        to_addresses: ["admin@iza-os.com", "ops@iza-os.com"]
+      
+      slack:
+        enabled: true
+        webhook_url: "${SLACK_WEBHOOK_URL}"
+        channel: "#alerts"
+        username: "IZA OS Alerts"
+        icon_emoji: ":warning:"
+      
+      pagerduty:
+        enabled: true
+        api_key: "${PAGERDUTY_API_KEY}"
+        service_key: "${PAGERDUTY_SERVICE_KEY}"
+        escalation_policy: "default"
+  
+  # Dashboard integration
+  dashboard:
+    enabled: true
+    refresh_interval: 30  # seconds
+    data_export_format: "json"
+    
+    # Chart configurations
+    charts:
+      system_metrics:
+        enabled: true
+        chart_type: "line"
+        time_range: "1h"
+        metrics: ["cpu_usage_percent", "memory_usage_bytes", "disk_usage_percent"]
+      
+      orchestration_metrics:
+        enabled: true
+        chart_type: "bar"
+        time_range: "24h"
+        metrics: ["agent_operations_total", "task_queue_size", "workflow_execution_time"]
+      
+      business_metrics:
+        enabled: true
+        chart_type: "gauge"
+        time_range: "1d"
+        metrics: ["ace_businesses_total", "business_revenue_total", "automation_level_percent"]
+      
+      repository_metrics:
+        enabled: true
+        chart_type: "line"
+        time_range: "7d"
+        metrics: ["repositories_total", "repository_commits_total", "deployment_success_rate"]
+  
+  # Performance settings
+  performance:
+    max_metrics_per_request: 1000
+    max_traces_per_request: 100
+    max_alerts_per_request: 50
+    cache_ttl_seconds: 300
+    batch_size: 100
+  
+  # Security settings
+  security:
+    enable_authentication: true
+    api_key_header: "X-API-Key"
+    rate_limiting:
+      enabled: true
+      requests_per_minute: 100
+      burst_size: 20
+    
+    # Data encryption
+    encryption:
+      enabled: true
+      algorithm: "AES-256-GCM"
+      key_rotation_days: 30

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS - Unified Venture Studio Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div x-data="ventureStudio()" class="min-h-screen">
+        <!-- Header -->
+        <header class="glass p-4 mb-6">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-rocket text-3xl text-white"></i>
+                    <h1 class="text-2xl font-bold text-white">IZA OS Venture Studio</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white">$1.4B+ Ecosystem Value</span>
+                    <button @click="createNewVenture()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-plus mr-2"></i>New Venture
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Status Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass rounded-lg p-6 text-white card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm opacity-75">Active Ventures</p>
+                            <p class="text-2xl font-bold" x-text="ventures.length"></p>
+                        </div>
+                        <i class="fas fa-building text-2xl opacity-75"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6 text-white card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm opacity-75">Revenue Pipeline</p>
+                            <p class="text-2xl font-bold">$10M+</p>
+                        </div>
+                        <i class="fas fa-chart-line text-2xl opacity-75"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6 text-white card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm opacity-75">AI Agents</p>
+                            <p class="text-2xl font-bold">29</p>
+                        </div>
+                        <i class="fas fa-robot text-2xl opacity-75"></i>
+                    </div>
+                </div>
+                <div class="glass rounded-lg p-6 text-white card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm opacity-75">Repositories</p>
+                            <p class="text-2xl font-bold">264+</p>
+                        </div>
+                        <i class="fas fa-code-branch text-2xl opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="glass rounded-lg p-6 mb-8">
+                <h2 class="text-xl font-bold text-white mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button @click="openPlatform('notion')" class="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg transition-colors">
+                        <i class="fas fa-sticky-note text-2xl mb-2"></i>
+                        <p>Notion Workspace</p>
+                    </button>
+                    <button @click="openPlatform('ollama')" class="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded-lg transition-colors">
+                        <i class="fas fa-brain text-2xl mb-2"></i>
+                        <p>Ollama AI</p>
+                    </button>
+                    <button @click="openPlatform('prisma')" class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-lg transition-colors">
+                        <i class="fas fa-database text-2xl mb-2"></i>
+                        <p>Prisma DB</p>
+                    </button>
+                    <button @click="openPlatform('linear')" class="bg-red-500 hover:bg-red-600 text-white p-4 rounded-lg transition-colors">
+                        <i class="fas fa-tasks text-2xl mb-2"></i>
+                        <p>Linear Tasks</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Venture Management -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Active Ventures -->
+                <div class="glass rounded-lg p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-white">Active Ventures</h2>
+                        <button @click="showVentureForm = !showVentureForm" class="text-white hover:text-gray-300">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- New Venture Form -->
+                    <div x-show="showVentureForm" class="mb-4 p-4 bg-white bg-opacity-10 rounded-lg">
+                        <input x-model="newVenture.name" type="text" placeholder="Venture Name" class="w-full p-2 rounded mb-2 bg-white bg-opacity-20 text-white placeholder-white">
+                        <select x-model="newVenture.type" class="w-full p-2 rounded mb-2 bg-white bg-opacity-20 text-white">
+                            <option value="saas">SaaS Platform</option>
+                            <option value="ecommerce">E-commerce</option>
+                            <option value="fintech">FinTech</option>
+                            <option value="ai">AI/ML</option>
+                            <option value="blockchain">Blockchain</option>
+                        </select>
+                        <button @click="addVenture()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded">Create Venture</button>
+                    </div>
+
+                    <!-- Ventures List -->
+                    <div class="space-y-3">
+                        <template x-for="venture in ventures" :key="venture.id">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-white font-semibold" x-text="venture.name"></h3>
+                                        <p class="text-white opacity-75" x-text="venture.type"></p>
+                                        <p class="text-white opacity-50 text-sm" x-text="venture.status"></p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button @click="editVenture(venture)" class="text-white hover:text-gray-300">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button @click="deployVenture(venture)" class="text-green-400 hover:text-green-300">
+                                            <i class="fas fa-rocket"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Platform Integrations -->
+                <div class="glass rounded-lg p-6">
+                    <h2 class="text-xl font-bold text-white mb-4">Platform Integrations</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Notion MCP</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Connected</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Ollama AI</span>
+                            </div>
+                            <span class="text-green-400 text-sm">5 Models</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Prisma DB</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Configured</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Linear Tasks</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Team WOR</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-white bg-opacity-10 rounded-lg p-3">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Sentry Monitoring</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Agent Swarm -->
+            <div class="glass rounded-lg p-6 mt-8">
+                <h2 class="text-xl font-bold text-white mb-4">AI Agent Swarm</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <template x-for="agent in aiAgents" :key="agent.id">
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+                            <i :class="agent.icon" class="text-2xl text-white mb-2"></i>
+                            <p class="text-white text-sm" x-text="agent.name"></p>
+                            <span class="text-green-400 text-xs" x-text="agent.status"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function ventureStudio() {
+            return {
+                ventures: [
+                    { id: 1, name: 'FinTech SaaS Platform', type: 'fintech', status: 'Development' },
+                    { id: 2, name: 'AI Marketing Suite', type: 'ai', status: 'Planning' },
+                    { id: 3, name: 'E-commerce Marketplace', type: 'ecommerce', status: 'MVP' }
+                ],
+                newVenture: { name: '', type: 'saas' },
+                showVentureForm: false,
+                aiAgents: [
+                    { id: 1, name: 'Code Generator', icon: 'fas fa-code', status: 'Active' },
+                    { id: 2, name: 'Data Analyst', icon: 'fas fa-chart-bar', status: 'Active' },
+                    { id: 3, name: 'Security Auditor', icon: 'fas fa-shield-alt', status: 'Active' },
+                    { id: 4, name: 'Marketing Bot', icon: 'fas fa-bullhorn', status: 'Active' },
+                    { id: 5, name: 'HR Assistant', icon: 'fas fa-users', status: 'Active' },
+                    { id: 6, name: 'Financial Advisor', icon: 'fas fa-calculator', status: 'Active' }
+                ],
+                
+                createNewVenture() {
+                    this.showVentureForm = true;
+                },
+                
+                addVenture() {
+                    if (this.newVenture.name) {
+                        const venture = {
+                            id: Date.now(),
+                            name: this.newVenture.name,
+                            type: this.newVenture.type,
+                            status: 'Planning'
+                        };
+                        this.ventures.push(venture);
+                        this.newVenture = { name: '', type: 'saas' };
+                        this.showVentureForm = false;
+                    }
+                },
+                
+                editVenture(venture) {
+                    const newName = prompt('Edit venture name:', venture.name);
+                    if (newName) {
+                        venture.name = newName;
+                    }
+                },
+                
+                deployVenture(venture) {
+                    alert(`Deploying ${venture.name}...`);
+                    // Here you would integrate with your deployment pipeline
+                },
+                
+                openPlatform(platform) {
+                    const urls = {
+                        notion: 'https://notion.so',
+                        ollama: 'http://localhost:11434',
+                        prisma: 'https://console.prisma.io/cmfvva5vz06bqzxfnnkg9ez7v/cmfvvaw2o01hmyogyou6p2yr6/cmfvvaw2o01hkyogydibfah2t/dashboard',
+                        linear: 'https://linear.app/worldwidebro/team/WOR/active'
+                    };
+                    window.open(urls[platform], '_blank');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

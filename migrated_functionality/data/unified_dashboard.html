@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS Enterprise Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .tab-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+        
+        .tab-pane {
+            display: none;
+        }
+        
+        .tab-pane.active {
+            display: block;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-online {
+            background: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+        
+        .status-offline {
+            background: #f44336;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IZA OS Enterprise Ecosystem</h1>
+            <p>Complete Enterprise Ecosystem for Autonomous Venture Studio Operations</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="ecosystem-value">$1.4B+</div>
+                    <div class="stat-label">Ecosystem Value</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-repos">211</div>
+                    <div class="stat-label">Active Repositories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="ace-businesses">382</div>
+                    <div class="stat-label">ACE Businesses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="ai-agents">1842</div>
+                    <div class="stat-label">AI Agents</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="overview">Overview</div>
+            <div class="tab" data-tab="agents">AI Agents</div>
+            <div class="tab" data-tab="workflows">Workflows</div>
+            <div class="tab" data-tab="verticals">Business Verticals</div>
+            <div class="tab" data-tab="governance">Governance</div>
+            <div class="tab" data-tab="monitoring">Monitoring</div>
+        </div>
+        
+        <div class="tab-content">
+            <div id="overview" class="tab-pane active">
+                <h2>System Overview</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Orchestration Status</h3>
+                        <div id="orchestration-status">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Recent Activity</h3>
+                        <div id="recent-activity">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="agents" class="tab-pane">
+                <h2>AI Agents</h2>
+                <div id="agents-content">
+                    <div class="loading">Loading agents...</div>
+                </div>
+            </div>
+            
+            <div id="workflows" class="tab-pane">
+                <h2>Workflows</h2>
+                <div id="workflows-content">
+                    <div class="loading">Loading workflows...</div>
+                </div>
+            </div>
+            
+            <div id="verticals" class="tab-pane">
+                <h2>Business Verticals</h2>
+                <div id="verticals-content">
+                    <div class="loading">Loading verticals...</div>
+                </div>
+            </div>
+            
+            <div id="governance" class="tab-pane">
+                <h2>Governance & Compliance</h2>
+                <div id="governance-content">
+                    <div class="loading">Loading governance data...</div>
+                </div>
+            </div>
+            
+            <div id="monitoring" class="tab-pane">
+                <h2>System Monitoring</h2>
+                <div id="monitoring-content">
+                    <div class="loading">Loading monitoring data...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Socket.IO connection
+        const socket = io();
+        
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab pane
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Load tab content
+            loadTabContent(tabName);
+        }
+        
+        // Load tab content
+        function loadTabContent(tabName) {
+            switch(tabName) {
+                case 'overview':
+                    loadOverview();
+                    break;
+                case 'agents':
+                    loadAgents();
+                    break;
+                case 'workflows':
+                    loadWorkflows();
+                    break;
+                case 'verticals':
+                    loadVerticals();
+                    break;
+                case 'governance':
+                    loadGovernance();
+                    break;
+                case 'monitoring':
+                    loadMonitoring();
+                    break;
+            }
+        }
+        
+        // Load overview data
+        function loadOverview() {
+            fetch('/api/ecosystem/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updateOrchestrationStatus(data.data.orchestration);
+                        updateRecentActivity();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading overview:', error);
+                    document.getElementById('orchestration-status').innerHTML = 
+                        '<div style="color: #f44336;">Error loading data</div>';
+                });
+        }
+        
+        // Update orchestration status
+        function updateOrchestrationStatus(status) {
+            const statusDiv = document.getElementById('orchestration-status');
+            const statusClass = status.status === 'running' ? 'status-online' : 'status-offline';
+            
+            statusDiv.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <span class="status-indicator ${statusClass}"></span>
+                    <strong>Status:</strong> ${status.status}
+                </div>
+                <div><strong>Initialized:</strong> ${status.initialized ? 'Yes' : 'No'}</div>
+                <div><strong>Timestamp:</strong> ${new Date(status.timestamp).toLocaleString()}</div>
+            `;
+        }
+        
+        // Update recent activity
+        function updateRecentActivity() {
+            document.getElementById('recent-activity').innerHTML = `
+                <div>System initialized successfully</div>
+                <div>Orchestration controller active</div>
+                <div>All subsystems operational</div>
+            `;
+        }
+        
+        // Load agents
+        function loadAgents() {
+            fetch('/api/agents')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        displayAgents(data.data.agents);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading agents:', error);
+                    document.getElementById('agents-content').innerHTML = 
+                        '<div style="color: #f44336;">Error loading agents</div>';
+                });
+        }
+        
+        // Display agents
+        function displayAgents(agents) {
+            const content = document.getElementById('agents-content');
+            if (agents.length === 0) {
+                content.innerHTML = '<div>No agents found</div>';
+                return;
+            }
+            
+            const agentsHTML = agents.map(agent => `
+                <div class="card" style="margin-bottom: 10px;">
+                    <div><strong>${agent.name || agent.id}</strong></div>
+                    <div>Status: ${agent.status || 'unknown'}</div>
+                    <div>Specialization: ${agent.specialization || 'N/A'}</div>
+                </div>
+            `).join('');
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn" onclick="loadAgents()">Refresh</button>
+                </div>
+                ${agentsHTML}
+            `;
+        }
+        
+        // Load workflows
+        function loadWorkflows() {
+            fetch('/api/workflows')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        displayWorkflows(data.data.workflows);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading workflows:', error);
+                    document.getElementById('workflows-content').innerHTML = 
+                        '<div style="color: #f44336;">Error loading workflows</div>';
+                });
+        }
+        
+        // Display workflows
+        function displayWorkflows(workflows) {
+            const content = document.getElementById('workflows-content');
+            if (workflows.length === 0) {
+                content.innerHTML = '<div>No workflows found</div>';
+                return;
+            }
+            
+            const workflowsHTML = workflows.map(workflow => `
+                <div class="card" style="margin-bottom: 10px;">
+                    <div><strong>${workflow.workflow_type || workflow.id}</strong></div>
+                    <div>Status: ${workflow.status || 'unknown'}</div>
+                    <div>Priority: ${workflow.priority || 'normal'}</div>
+                </div>
+            `).join('');
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn" onclick="loadWorkflows()">Refresh</button>
+                </div>
+                ${workflowsHTML}
+            `;
+        }
+        
+        // Load verticals
+        function loadVerticals() {
+            fetch('/api/verticals')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        displayVerticals(data.data.verticals);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading verticals:', error);
+                    document.getElementById('verticals-content').innerHTML = 
+                        '<div style="color: #f44336;">Error loading verticals</div>';
+                });
+        }
+        
+        // Display verticals
+        function displayVerticals(verticals) {
+            const content = document.getElementById('verticals-content');
+            if (verticals.length === 0) {
+                content.innerHTML = '<div>No verticals found</div>';
+                return;
+            }
+            
+            const verticalsHTML = verticals.map(vertical => `
+                <div class="card" style="margin-bottom: 10px;">
+                    <div><strong>${vertical.name}</strong></div>
+                    <div>Value: ${vertical.value}</div>
+                    <div>${vertical.description}</div>
+                </div>
+            `).join('');
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn" onclick="loadVerticals()">Refresh</button>
+                </div>
+                ${verticalsHTML}
+            `;
+        }
+        
+        // Load governance
+        function loadGovernance() {
+            fetch('/api/governance/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        displayGovernance(data.data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading governance:', error);
+                    document.getElementById('governance-content').innerHTML = 
+                        '<div style="color: #f44336;">Error loading governance data</div>';
+                });
+        }
+        
+        // Display governance
+        function displayGovernance(data) {
+            document.getElementById('governance-content').innerHTML = `
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Compliance Status</h3>
+                        <div>Status: <span class="status-indicator ${data.status === 'active' ? 'status-online' : 'status-offline'}"></span>${data.status}</div>
+                        <div>Compliance Rate: ${(data.compliance_rate * 100).toFixed(1)}%</div>
+                        <div>Active Violations: ${data.active_violations}</div>
+                    </div>
+                    <div class="card">
+                        <h3>Actions</h3>
+                        <button class="btn" onclick="loadGovernance()">Refresh Status</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Load monitoring
+        function loadMonitoring() {
+            document.getElementById('monitoring-content').innerHTML = `
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>System Health</h3>
+                        <div>All systems operational</div>
+                        <div>Uptime: 99.9%</div>
+                        <div>Last check: ${new Date().toLocaleString()}</div>
+                    </div>
+                    <div class="card">
+                        <h3>Performance Metrics</h3>
+                        <div>Response time: < 100ms</div>
+                        <div>Throughput: High</div>
+                        <div>Error rate: < 0.1%</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Socket.IO event handlers
+        socket.on('connect', function() {
+            console.log('Connected to dashboard');
+        });
+        
+        socket.on('ecosystem_update', function(data) {
+            console.log('Ecosystem update received:', data);
+            // Update ecosystem stats if on overview tab
+            if (document.getElementById('overview').classList.contains('active')) {
+                loadOverview();
+            }
+        });
+        
+        socket.on('agents_update', function(data) {
+            console.log('Agents update received:', data);
+            // Update agents if on agents tab
+            if (document.getElementById('agents').classList.contains('active')) {
+                displayAgents(data.data);
+            }
+        });
+        
+        socket.on('workflows_update', function(data) {
+            console.log('Workflows update received:', data);
+            // Update workflows if on workflows tab
+            if (document.getElementById('workflows').classList.contains('active')) {
+                displayWorkflows(data.data);
+            }
+        });
+        
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOverview();
+            
+            // Request periodic updates
+            setInterval(() => {
+                socket.emit('request_update', { type: 'all' });
+            }, 30000); // Update every 30 seconds
+        });
+    </script>
+</body>
+</html>

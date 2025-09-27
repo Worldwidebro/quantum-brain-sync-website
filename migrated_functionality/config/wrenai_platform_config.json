@@ -1,0 +1,29 @@
+{
+  "platform": "WrenAI",
+  "status": "configured",
+  "iza_os_integration_version": "1.0",
+  "website": "https://wren.ai",
+  "api_integration": {
+    "endpoint": "https://api.wren.ai",
+    "authentication": "API Key required",
+    "features": [
+      "data_analytics",
+      "ai_insights",
+      "business_intelligence"
+    ]
+  },
+  "use_cases": [
+    "Data analytics and visualization",
+    "AI-powered business insights",
+    "Automated reporting",
+    "Predictive analytics"
+  ],
+  "description": "AI-powered data platform",
+  "integration_steps": [
+    "1. Sign up at https://wren.ai",
+    "2. Get API key from dashboard",
+    "3. Configure API key in IZA OS",
+    "4. Connect data sources",
+    "5. Create analytics workflows"
+  ]
+}

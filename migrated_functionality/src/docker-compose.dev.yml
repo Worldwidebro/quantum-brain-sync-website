@@ -1,0 +1,342 @@
+version: '3.8'
+
+services:
+  # Core Infrastructure
+  redis:
+    image: redis:7-alpine
+    container_name: iza-os-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  postgres:
+    image: postgres:15
+    container_name: iza-os-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=iza_ecosystem
+      - POSTGRES_USER=iza_user
+      - POSTGRES_PASSWORD=iza_secure_password_2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iza_user -d iza_ecosystem"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: iza-os-neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=iza_user/iza_secure_password_2024
+      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "iza_user", "-p", "iza_secure_password_2024", "RETURN 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: iza-os-chroma
+    ports:
+      - "8001:8000"
+    environment:
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+    volumes:
+      - chroma_data:/chroma/chroma
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  minio:
+    image: minio/minio:latest
+    container_name: iza-os-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=iza_user
+      - MINIO_ROOT_PASSWORD=iza_secure_password_2024
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  # Local LLM Server (Ollama)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: iza-os-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - iza-ecosystem
+
+  # Core Services
+  api-gateway:
+    build:
+      context: ./iza-os-core
+      dockerfile: Dockerfile
+    container_name: iza-os-api-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DATABASE_URL=postgresql://iza_user:iza_secure_password_2024@postgres:5432/iza_ecosystem
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=iza_user
+      - NEO4J_PASSWORD=iza_secure_password_2024
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=iza_user
+      - MINIO_SECRET_KEY=iza_secure_password_2024
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+    volumes:
+      - ./iza-os-core:/app
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      chroma:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  dashboard:
+    build:
+      context: ./iza-os-web
+      dockerfile: Dockerfile
+    container_name: iza-os-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NODE_ENV=development
+    volumes:
+      - ./iza-os-web:/app
+      - /app/node_modules
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  mobile-backend:
+    build:
+      context: ./iza-os-mobile/backend
+      dockerfile: Dockerfile
+    container_name: iza-os-mobile-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./iza-os-mobile/backend:/app
+    depends_on:
+      - api-gateway
+      - redis
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  monitoring:
+    build:
+      context: ./iza-os-monitoring
+      dockerfile: Dockerfile
+    container_name: iza-os-monitoring
+    ports:
+      - "3002:3002"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_URL=postgresql://iza_user:iza_secure_password_2024@postgres:5432/iza_ecosystem
+    volumes:
+      - ./iza-os-monitoring:/app
+    depends_on:
+      - api-gateway
+      - redis
+      - postgres
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  # Agent Services
+  agent-manager:
+    build:
+      context: ./iza-os-agents
+      dockerfile: Dockerfile
+    container_name: iza-os-agent-manager
+    ports:
+      - "3010:3010"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+    volumes:
+      - ./iza-os-agents:/app
+      - ./data:/app/data
+    depends_on:
+      - api-gateway
+      - redis
+      - ollama
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  # Data Processing
+  data-processor:
+    build:
+      context: ./iza-os-data
+      dockerfile: Dockerfile
+    container_name: iza-os-data-processor
+    ports:
+      - "3020:3020"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=iza_user
+      - NEO4J_PASSWORD=iza_secure_password_2024
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=iza_user
+      - MINIO_SECRET_KEY=iza_secure_password_2024
+    volumes:
+      - ./iza-os-data:/app
+      - ./data:/app/data
+    depends_on:
+      - api-gateway
+      - redis
+      - chroma
+      - neo4j
+      - minio
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  # MCP Servers
+  mcp-server:
+    build:
+      context: ./iza-os-mcp
+      dockerfile: Dockerfile
+    container_name: iza-os-mcp-server
+    ports:
+      - "3030:3030"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./iza-os-mcp:/app
+    depends_on:
+      - api-gateway
+      - redis
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: iza-os-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api-gateway
+      - dashboard
+      - mobile-backend
+      - monitoring
+    restart: unless-stopped
+    networks:
+      - iza-ecosystem
+
+volumes:
+  redis_data:
+  postgres_data:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
+  chroma_data:
+  minio_data:
+  ollama_data:
+
+networks:
+  iza-ecosystem:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

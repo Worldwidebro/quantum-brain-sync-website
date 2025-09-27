@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS - Activepieces Embedded Integration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .integration-controls {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 1rem;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .control-group input, .control-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #5a67d8;
+        }
+        
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .activepieces-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+        
+        #activepieces-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        
+        .status {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background: #e5e7eb;
+        }
+        
+        .nav-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 IZA OS - Activepieces Embedded Integration</h1>
+        <p>Enterprise workflow automation with URL synchronization</p>
+    </div>
+    
+    <div class="container">
+        <div class="integration-controls">
+            <div class="control-group">
+                <label for="instanceUrl">Activepieces Instance URL:</label>
+                <input type="text" id="instanceUrl" value="https://cloud.activepieces.com" placeholder="https://cloud.activepieces.com">
+            </div>
+            
+            <div class="control-group">
+                <label for="jwtToken">JWT Token:</label>
+                <input type="text" id="jwtToken" placeholder="Enter your JWT token">
+            </div>
+            
+            <div class="control-group">
+                <label for="containerId">Container ID:</label>
+                <input type="text" id="containerId" value="activepieces-container" placeholder="activepieces-container">
+            </div>
+            
+            <div class="control-group">
+                <label for="initialRoute">Initial Route:</label>
+                <select id="initialRoute">
+                    <option value="/flows">Flows Table</option>
+                    <option value="/runs">Runs Table</option>
+                    <option value="/connections">Connections Table</option>
+                    <option value="/tables">Tables Table</option>
+                    <option value="/todos">Todos Table</option>
+                </select>
+            </div>
+            
+            <button class="btn" onclick="initializeActivepieces()">🚀 Initialize Activepieces</button>
+            <button class="btn" onclick="generateJWTToken()">🔑 Generate JWT Token</button>
+        </div>
+        
+        <div id="status-container"></div>
+        
+        <div class="navigation-buttons" id="navigation-buttons" style="display: none;">
+            <button class="nav-btn" onclick="navigateTo('/flows')">📋 Flows</button>
+            <button class="nav-btn" onclick="navigateTo('/runs')">🏃 Runs</button>
+            <button class="nav-btn" onclick="navigateTo('/connections')">🔗 Connections</button>
+            <button class="nav-btn" onclick="navigateTo('/tables')">📊 Tables</button>
+            <button class="nav-btn" onclick="navigateTo('/todos')">✅ Todos</button>
+        </div>
+        
+        <div class="activepieces-container">
+            <div id="activepieces-container">
+                <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                    <h3>🔗 Activepieces Integration</h3>
+                    <p>Click "Initialize Activepieces" to start the embedded integration</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activepieces SDK -->
+    <script src="https://unpkg.com/@activepieces/embed@latest/dist/index.js"></script>
+    
+    <script>
+        let activepiecesInstance = null;
+        let currentRoute = '/flows';
+        
+        function showStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('status-container');
+            statusContainer.innerHTML = `
+                <div class="status ${type}">
+                    <strong>${type.toUpperCase()}:</strong> ${message}
+                </div>
+            `;
+        }
+        
+        function generateJWTToken() {
+            showStatus('🔑 Generating JWT token...', 'info');
+            
+            // This would typically call your backend to generate a JWT token
+            // For now, we'll use a placeholder
+            const mockJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+            
+            document.getElementById('jwtToken').value = mockJWT;
+            showStatus('✅ JWT token generated (mock token for demo)', 'success');
+        }
+        
+        function initializeActivepieces() {
+            const instanceUrl = document.getElementById('instanceUrl').value;
+            const jwtToken = document.getElementById('jwtToken').value;
+            const containerId = document.getElementById('containerId').value;
+            const initialRoute = document.getElementById('initialRoute').value;
+            
+            if (!instanceUrl || !jwtToken || !containerId) {
+                showStatus('❌ Please fill in all required fields', 'error');
+                return;
+            }
+            
+            showStatus('🚀 Initializing Activepieces embedded integration...', 'info');
+            
+            try {
+                // Configure Activepieces with URL synchronization
+                activepieces.configure({
+                    instanceUrl,
+                    jwtToken,
+                    embedding: {
+                        containerId,
+                        builder: {
+                            disableNavigation: false,
+                            hideFlowName: false
+                        },
+                        dashboard: {
+                            hideSidebar: false
+                        },
+                        hideFolders: false,
+                        navigation: {
+                            handler: ({ route }) => {
+                                console.log('🔄 Route changed:', route);
+                                // Sync URL with browser
+                                if (!window.location.href.endsWith(route)) {
+                                    window.history.pushState({}, "", window.location.origin + route);
+                                }
+                                updateNavigationButtons(route);
+                            }
+                        }
+                    },
+                }).then(() => {
+                    showStatus('✅ Activepieces initialized successfully!', 'success');
+                    
+                    // Show navigation buttons
+                    document.getElementById('navigation-buttons').style.display = 'flex';
+                    
+                    // Navigate to initial route
+                    if (initialRoute) {
+                        navigateTo(initialRoute);
+                    }
+                    
+                    // Listen for browser back/forward
+                    window.addEventListener("popstate", () => {
+                        const route = activepieces.extractActivepiecesRouteFromUrl({ 
+                            vendorUrl: window.location.href 
+                        });
+                        if (route) {
+                            activepieces.navigate({ route });
+                            updateNavigationButtons(route);
+                        }
+                    });
+                    
+                }).catch(error => {
+                    showStatus(`❌ Failed to initialize Activepieces: ${error.message}`, 'error');
+                    console.error('Activepieces initialization error:', error);
+                });
+                
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, 'error');
+                console.error('Error:', error);
+            }
+        }
+        
+        function navigateTo(route) {
+            if (activepiecesInstance) {
+                activepieces.navigate({ route });
+                currentRoute = route;
+                updateNavigationButtons(route);
+                showStatus(`🔄 Navigated to: ${route}`, 'info');
+            } else {
+                showStatus('❌ Activepieces not initialized', 'error');
+            }
+        }
+        
+        function updateNavigationButtons(route) {
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.onclick.toString().includes(route)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Initialize on page load if we have the required parameters
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const instanceUrl = urlParams.get('instanceUrl');
+            const jwtToken = urlParams.get('jwtToken');
+            
+            if (instanceUrl) {
+                document.getElementById('instanceUrl').value = instanceUrl;
+            }
+            if (jwtToken) {
+                document.getElementById('jwtToken').value = jwtToken;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "strata_server": {
+    "name": "iza_os_strata",
+    "description": "IZA OS Unified MCP Router - One server for thousands of tools",
+    "version": "1.0.0",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/strata-mcp:latest",
+      "port": 5000,
+      "environment": {
+        "STRATA_MODE": "production",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "servers": [
+      "GITHUB",
+      "NOTION",
+      "LINEAR",
+      "SENTRY",
+      "VERCEL",
+      "STRIPE",
+      "SUPABASE",
+      "POSTGRESQL",
+      "REDIS",
+      "DOCKER",
+      "KUBERNETES",
+      "TERRAFORM",
+      "AWS",
+      "GOOGLE_CLOUD",
+      "DISCORD",
+      "SLACK"
+    ],
+    "progressive_discovery": {
+      "enabled": true,
+      "steps": [
+        "intent_recognition",
+        "tool_discovery",
+        "parameter_extraction",
+        "execution_planning",
+        "action_execution"
+      ]
+    },
+    "iza_os_integration": {
+      "mas_agents": [
+        "research_agent",
+        "planning_agent",
+        "execution_agent",
+        "rag_agent",
+        "critic_agent",
+        "monitoring_agent"
+      ],
+      "mlops_pipelines": [
+        "model_training_pipeline",
+        "embedding_pipeline"
+      ],
+      "rag_systems": [
+        "venture_knowledge_rag",
+        "code_context_rag",
+        "business_intelligence_rag"
+      ]
+    }
+  }
+}

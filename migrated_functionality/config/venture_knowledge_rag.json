@@ -1,0 +1,15 @@
+{
+  "name": "venture_knowledge_rag",
+  "vector_db": "chromadb",
+  "embedding_model": "all-MiniLM-L6-v2",
+  "retrieval_strategy": "hybrid",
+  "chunk_size": 1000,
+  "overlap": 200,
+  "sources": [
+    "notion_workspace",
+    "github_repos",
+    "documentation",
+    "research_papers"
+  ],
+  "fusion_method": "reciprocal_rank_fusion"
+}

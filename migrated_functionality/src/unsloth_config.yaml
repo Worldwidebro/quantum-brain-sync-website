@@ -1,0 +1,260 @@
+# IZA OS Unsloth LLM Fine-tuning Configuration
+# Enterprise-grade configuration following McKinsey 7S framework
+
+# Unsloth Configuration
+unsloth:
+  max_seq_length: 2048
+  dtype: "float16"  # float16, bfloat16, float32
+  load_in_4bit: true
+  device_map: "auto"
+  trust_remote_code: true
+  use_cache: true
+  max_memory: "80%"
+  low_cpu_mem_usage: true
+
+# Training Configuration
+training:
+  max_epochs: 5
+  learning_rate: 2e-4
+  batch_size: 2
+  gradient_accumulation_steps: 4
+  warmup_steps: 100
+  weight_decay: 0.01
+  lr_scheduler_type: "cosine"  # linear, cosine, cosine_with_restarts, polynomial, constant, constant_with_warmup
+  save_steps: 500
+  eval_steps: 500
+  logging_steps: 100
+  max_steps: -1
+  fp16: true
+  bf16: false
+  gradient_checkpointing: true
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+  report_to: "none"  # wandb, tensorboard, none
+  run_name: "unsloth_training"
+  seed: 42
+  data_seed: 42
+  deterministic: true
+  dataloader_pin_memory: true
+  dataloader_persistent_workers: true
+
+# GPU Configuration
+gpu:
+  enabled: true
+  memory_fraction: 0.8
+  allow_growth: true
+  mixed_precision: true
+  cuda_visible_devices: "0"
+  gpu_memory_limit_mb: 8192
+  max_gpu_memory_usage: 0.9
+  gpu_monitoring_interval: 10
+
+# Storage Configuration
+storage:
+  models_dir: "models"
+  datasets_dir: "datasets"
+  outputs_dir: "outputs"
+  cache_dir: "cache"
+  logs_dir: "logs"
+  max_storage_gb: 100
+  cleanup_after_days: 30
+  compression_enabled: true
+  encryption_enabled: true
+
+# Redis Configuration
+redis:
+  host: "localhost"
+  port: 6379
+  db: 2
+  password: "${REDIS_PASSWORD}"
+  max_connections: 20
+  socket_timeout: 5
+  socket_connect_timeout: 5
+  retry_on_timeout: true
+  decode_responses: true
+
+# Database Configuration
+database:
+  url: "postgresql://iza_user:iza_pass@localhost/iza_os_unsloth"
+  pool_size: 10
+  max_overflow: 20
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+# Security Configuration
+security:
+  jwt_secret: "${JWT_SECRET}"
+  jwt_algorithm: "HS256"
+  jwt_expiry_hours: 24
+  model_encryption: true
+  dataset_encryption: true
+  api_key_required: true
+  rate_limiting: true
+  max_requests_per_minute: 60
+  audit_logging: true
+
+# Monitoring Configuration
+monitoring:
+  metrics_enabled: true
+  metrics_port: 8003
+  log_level: "INFO"
+  log_format: "json"
+  performance_monitoring: true
+  gpu_monitoring: true
+  training_monitoring: true
+  alerting_enabled: true
+  health_check_interval: 30
+
+# Model Configuration
+models:
+  supported_types:
+    - "llama2_7b"
+    - "llama2_13b"
+    - "mistral_7b"
+    - "codellama_7b"
+    - "codellama_13b"
+    - "custom"
+  
+  default_models:
+    instruction_following: "llama2_7b"
+    code_generation: "codellama_7b"
+    conversation: "mistral_7b"
+    text_completion: "llama2_7b"
+
+# Dataset Configuration
+datasets:
+  supported_formats:
+    - "json"
+    - "csv"
+    - "txt"
+    - "parquet"
+    - "jsonl"
+  
+  max_file_size_mb: 1000
+  max_dataset_size_mb: 10000
+  validation_enabled: true
+  preprocessing_enabled: true
+  data_augmentation: false
+
+# LoRA Configuration
+lora:
+  r: 16  # Rank
+  lora_alpha: 16
+  lora_dropout: 0.1
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  bias: "none"
+  use_gradient_checkpointing: "unsloth"
+  random_state: 3407
+  use_rslora: false
+  loftq_config: null
+
+# Quality Gates Configuration
+quality_gates:
+  test_coverage_minimum: 90
+  performance_threshold_ms: 10000
+  error_rate_threshold: 0.01
+  availability_threshold: 99.9
+  security_scan_enabled: true
+  model_validation: true
+  dataset_validation: true
+
+# Compliance Configuration
+compliance:
+  gdpr_enabled: true
+  data_retention_days: 365
+  audit_logging: true
+  encryption_at_rest: true
+  encryption_in_transit: true
+  access_logging: true
+  model_versioning: true
+  dataset_versioning: true
+
+# Performance Optimization
+performance:
+  model_caching: true
+  dataset_caching: true
+  parallel_processing: true
+  memory_optimization: true
+  batch_optimization: true
+  gpu_optimization: true
+  cpu_optimization: true
+
+# Error Handling
+error_handling:
+  retry_policy:
+    max_retries: 3
+    backoff_factor: 2
+    retry_on_timeout: true
+    retry_on_connection_error: true
+  
+  fallback_models:
+    enabled: true
+    automatic_fallback: true
+    notification_on_fallback: true
+  
+  logging:
+    detailed_error_logging: true
+    stack_trace_logging: true
+    performance_logging: true
+
+# Testing Configuration
+testing:
+  headless_mode: true
+  test_data_path: "tests/data"
+  model_path: "tests/models"
+  mock_external_services: true
+  parallel_test_execution: true
+  test_timeout: 600
+  validation_tests: true
+  integration_tests: true
+  performance_tests: true
+
+# Business Logic Configuration
+business:
+  max_training_jobs_per_user: 10
+  max_concurrent_jobs: 3
+  max_training_time_hours: 24
+  cost_tracking_enabled: true
+  usage_analytics_enabled: true
+  model_sharing_enabled: false
+  dataset_sharing_enabled: false
+
+# Integration Configuration
+integrations:
+  azis_learns_ai:
+    enabled: true
+    endpoint: "http://localhost:8002"
+    api_key: "${AZI_LEARNS_API_KEY}"
+    
+  huggingface:
+    enabled: true
+    api_token: "${HUGGINGFACE_TOKEN}"
+    auto_upload: false
+    
+  wandb:
+    enabled: false
+    api_key: "${WANDB_API_KEY}"
+    project_name: "iza_os_unsloth"
+
+# Resource Management
+resources:
+  cpu_limit_percent: 80
+  memory_limit_mb: 16384
+  gpu_limit_percent: 90
+  disk_space_limit_gb: 200
+  network_bandwidth_limit_mbps: 1000
+  
+  auto_scaling:
+    enabled: true
+    min_instances: 1
+    max_instances: 5
+    scale_up_threshold: 80
+    scale_down_threshold: 20

@@ -1,0 +1,562 @@
+{
+  "GITHUB": {
+    "name": "github",
+    "display_name": "Github",
+    "description": "GITHUB MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/github-mcp-server:latest",
+      "port": 5937,
+      "environment": {
+        "SERVER_NAME": "GITHUB",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "repo",
+        "user",
+        "admin:org"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/github/callback"
+    },
+    "capabilities": [
+      "repository_management",
+      "issue_tracking",
+      "pull_requests",
+      "deployments"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "execution_agent",
+        "monitoring_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "NOTION": {
+    "name": "notion",
+    "display_name": "Notion",
+    "description": "NOTION MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/notion-mcp-server:latest",
+      "port": 5093,
+      "environment": {
+        "SERVER_NAME": "NOTION",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/notion/callback"
+    },
+    "capabilities": [
+      "page_management",
+      "database_operations",
+      "content_creation"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent",
+        "planning_agent",
+        "rag_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "LINEAR": {
+    "name": "linear",
+    "display_name": "Linear",
+    "description": "LINEAR MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/linear-mcp-server:latest",
+      "port": 5966,
+      "environment": {
+        "SERVER_NAME": "LINEAR",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/linear/callback"
+    },
+    "capabilities": [
+      "issue_management",
+      "project_tracking",
+      "team_collaboration"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "planning_agent",
+        "execution_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "SENTRY": {
+    "name": "sentry",
+    "display_name": "Sentry",
+    "description": "SENTRY MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/sentry-mcp-server:latest",
+      "port": 5311,
+      "environment": {
+        "SERVER_NAME": "SENTRY",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/sentry/callback"
+    },
+    "capabilities": [
+      "error_monitoring",
+      "performance_tracking",
+      "alerting"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "monitoring_agent",
+        "critic_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "VERCEL": {
+    "name": "vercel",
+    "display_name": "Vercel",
+    "description": "VERCEL MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/vercel-mcp-server:latest",
+      "port": 5932,
+      "environment": {
+        "SERVER_NAME": "VERCEL",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/vercel/callback"
+    },
+    "capabilities": [
+      "deployment",
+      "domain_management",
+      "analytics"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "execution_agent",
+        "monitoring_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "STRIPE": {
+    "name": "stripe",
+    "display_name": "Stripe",
+    "description": "STRIPE MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/stripe-mcp-server:latest",
+      "port": 5304,
+      "environment": {
+        "SERVER_NAME": "STRIPE",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/stripe/callback"
+    },
+    "capabilities": [
+      "payment_processing",
+      "subscription_management",
+      "webhooks"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "execution_agent",
+        "monitoring_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "SUPABASE": {
+    "name": "supabase",
+    "display_name": "Supabase",
+    "description": "SUPABASE MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/supabase-mcp-server:latest",
+      "port": 5104,
+      "environment": {
+        "SERVER_NAME": "SUPABASE",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/supabase/callback"
+    },
+    "capabilities": [
+      "database_operations",
+      "authentication",
+      "storage"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "rag_agent",
+        "execution_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "POSTGRESQL": {
+    "name": "postgresql",
+    "display_name": "Postgresql",
+    "description": "POSTGRESQL MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/postgresql-mcp-server:latest",
+      "port": 5349,
+      "environment": {
+        "SERVER_NAME": "POSTGRESQL",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/postgresql/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "REDIS": {
+    "name": "redis",
+    "display_name": "Redis",
+    "description": "REDIS MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/redis-mcp-server:latest",
+      "port": 5979,
+      "environment": {
+        "SERVER_NAME": "REDIS",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/redis/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "DOCKER": {
+    "name": "docker",
+    "display_name": "Docker",
+    "description": "DOCKER MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/docker-mcp-server:latest",
+      "port": 5010,
+      "environment": {
+        "SERVER_NAME": "DOCKER",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/docker/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "KUBERNETES": {
+    "name": "kubernetes",
+    "display_name": "Kubernetes",
+    "description": "KUBERNETES MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/kubernetes-mcp-server:latest",
+      "port": 5071,
+      "environment": {
+        "SERVER_NAME": "KUBERNETES",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/kubernetes/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "TERRAFORM": {
+    "name": "terraform",
+    "display_name": "Terraform",
+    "description": "TERRAFORM MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/terraform-mcp-server:latest",
+      "port": 5740,
+      "environment": {
+        "SERVER_NAME": "TERRAFORM",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/terraform/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "AWS": {
+    "name": "aws",
+    "display_name": "Aws",
+    "description": "AWS MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/aws-mcp-server:latest",
+      "port": 5135,
+      "environment": {
+        "SERVER_NAME": "AWS",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/aws/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "GOOGLE_CLOUD": {
+    "name": "google_cloud",
+    "display_name": "Google_Cloud",
+    "description": "GOOGLE_CLOUD MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/google_cloud-mcp-server:latest",
+      "port": 5812,
+      "environment": {
+        "SERVER_NAME": "GOOGLE_CLOUD",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/google_cloud/callback"
+    },
+    "capabilities": [
+      "basic_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "research_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "DISCORD": {
+    "name": "discord",
+    "display_name": "Discord",
+    "description": "DISCORD MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/discord-mcp-server:latest",
+      "port": 5522,
+      "environment": {
+        "SERVER_NAME": "DISCORD",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "guilds",
+        "messages",
+        "webhooks"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/discord/callback"
+    },
+    "capabilities": [
+      "messaging",
+      "server_management",
+      "bot_operations"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "monitoring_agent",
+        "critic_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  },
+  "SLACK": {
+    "name": "slack",
+    "display_name": "Slack",
+    "description": "SLACK MCP server for IZA OS ecosystem",
+    "deployment": {
+      "type": "docker",
+      "image": "ghcr.io/klavis-ai/slack-mcp-server:latest",
+      "port": 5664,
+      "environment": {
+        "SERVER_NAME": "SLACK",
+        "IZA_OS_INTEGRATION": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "oauth": {
+      "enabled": true,
+      "scopes": [
+        "channels:read",
+        "chat:write",
+        "users:read"
+      ],
+      "redirect_uri": "https://iza-os.com/oauth/slack/callback"
+    },
+    "capabilities": [
+      "messaging",
+      "channel_management",
+      "user_management"
+    ],
+    "iza_os_integration": {
+      "agent_access": [
+        "monitoring_agent",
+        "critic_agent"
+      ],
+      "workflow_integration": true,
+      "monitoring_enabled": true
+    }
+  }
+}

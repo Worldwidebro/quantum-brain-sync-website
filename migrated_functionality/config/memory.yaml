@@ -1,0 +1,50 @@
+# Memory configuration for IZA OS orchestration system
+# Redis and vector database settings for memory management
+
+redis:
+  host: localhost
+  port: 6379
+  password: null
+  db: 0
+  connection_pool_size: 10
+  timeout: 5
+
+pinecone:
+  api_key: ${PINECONE_API_KEY}
+  environment: us-east-1-aws
+  index_name: iza-os-memory
+  dimension: 1536
+  namespace_prefix: agent
+
+openai:
+  api_key: ${OPENAI_API_KEY}
+  model: text-embedding-ada-002
+  batch_size: 100
+
+memory:
+  short_term_ttl: 3600  # 1 hour
+  long_term_retention: 2592000  # 30 days
+  compaction_threshold: 100  # Access count threshold
+  cleanup_interval: 3600  # 1 hour
+  namespace_prefix: agent
+  max_memory_per_agent: 1000  # Maximum memories per agent
+  compression_enabled: true
+  compression_threshold: 10000  # Compress memories larger than 10KB
+
+performance:
+  batch_operations: true
+  batch_size: 50
+  parallel_operations: 5
+  cache_enabled: true
+  cache_size: 1000
+  cache_ttl: 300  # 5 minutes
+
+monitoring:
+  metrics_enabled: true
+  health_check_interval: 60
+  performance_tracking: true
+  memory_usage_alerts: true
+  alert_thresholds:
+    memory_usage_percent: 80
+    response_time_ms: 1000
+    error_rate_percent: 5

@@ -1,0 +1,15 @@
+{
+  "repository": "POML",
+  "type": "microsoft",
+  "value": "$50M+",
+  "integrationPoints": [
+    "microsoft_integration",
+    "enterprise"
+  ],
+  "izaOSIntegration": {
+    "backend": "http://localhost:8000",
+    "docker": "docker-compose-core.yml",
+    "bmad": "BMAD-METHOD/iza-os-config.yaml"
+  },
+  "status": "integrated"
+}

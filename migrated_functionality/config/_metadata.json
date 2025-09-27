@@ -1,0 +1,46 @@
+{
+  "hash": "21fd9abc",
+  "configHash": "3cb59985",
+  "lockfileHash": "7cbdd7ed",
+  "browserHash": "fe661e91",
+  "optimized": {
+    "react": {
+      "src": "../../react/index.js",
+      "file": "react.js",
+      "fileHash": "64de2f25",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "3846e3fa",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "244b8457",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "380b590a",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "6b69a8fa",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-M324AGAM": {
+      "file": "chunk-M324AGAM.js"
+    },
+    "chunk-I4MZPW7S": {
+      "file": "chunk-I4MZPW7S.js"
+    }
+  }
+}

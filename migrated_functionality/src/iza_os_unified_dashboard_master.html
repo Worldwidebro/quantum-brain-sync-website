@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZA OS Unified Dashboard - Master System</title>
+    <meta name="description" content="Unified dashboard consolidating all technologies: HTML, Python, React, NextJS, TypeScript, JavaScript, JSON, CSS">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <style>
+        :root {
+            --iza-primary: #1E3A8A;
+            --iza-secondary: #10B981;
+            --iza-accent: #F59E0B;
+            --iza-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--iza-background);
+            color: white;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .logo .badge {
+            background: var(--iza-secondary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover, .nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-title {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-change {
+            font-size: 0.875rem;
+            color: var(--iza-secondary);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 0.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .chart-title {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        /* Calculator Section */
+        .calculator-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .calculator-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .calculator-title h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 2rem;
+            align-items: end;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input {
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--iza-primary);
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(45deg, var(--iza-primary), #3B82F6);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--iza-secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .result-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--iza-secondary);
+        }
+        
+        .result-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Financial Verticals */
+        .verticals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .vertical-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .vertical-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .vertical-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .vertical-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .vertical-description {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .generate-btn {
+            background: var(--iza-accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .generate-btn:hover {
+            background: #D97706;
+        }
+        
+        .generate-btn:disabled {
+            background: #6B7280;
+            cursor: not-allowed;
+        }
+        
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-online {
+            background: var(--iza-secondary);
+        }
+        
+        .status-offline {
+            background: #ef4444;
+        }
+        
+        .status-warning {
+            background: var(--iza-accent);
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .notification.success {
+            background: rgba(16, 185, 129, 0.9);
+        }
+        
+        .notification.error {
+            background: rgba(239, 68, 68, 0.9);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .verticals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🌟 IZA OS Unified Dashboard</h1>
+                    <span class="badge">v3.0.0</span>
+                </div>
+                <nav class="nav">
+                    <a href="#overview" class="nav-item active" data-tab="overview">📊 Overview</a>
+                    <a href="#genixbank" class="nav-item" data-tab="genixbank">🏦 GenixBank</a>
+                    <a href="#business" class="nav-item" data-tab="business">🏢 Business</a>
+                    <a href="#ai-systems" class="nav-item" data-tab="ai-systems">🤖 AI Systems</a>
+                    <a href="#workflows" class="nav-item" data-tab="workflows">🔄 Workflows</a>
+                    <a href="#services" class="nav-item" data-tab="services">⚡ Services</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Metrics Overview -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Total Ecosystem Value</div>
+                    <div class="metric-value" id="ecosystem-value">${{ "{:,.0f}".format(config.total_assets) }}</div>
+                    <div class="metric-change">+12.5% from last month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Annual Recurring Revenue</div>
+                    <div class="metric-value" id="annual-revenue">${{ "{:,.0f}".format(config.monthly_revenue) }}</div>
+                    <div class="metric-change">+8.3% from last quarter</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Active Businesses</div>
+                    <div class="metric-value" id="total-businesses">{{ config.active_accounts }}</div>
+                    <div class="metric-change">+15 new this month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">AI Agents</div>
+                    <div class="metric-value" id="total-agents">{{ config.ai_agents }}</div>
+                    <div class="metric-change">98.7% operational</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Financial Verticals</div>
+                    <div class="metric-value" id="financial-verticals">{{ config.financial_verticals }}</div>
+                    <div class="metric-change">All platforms active</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card">
+                        <div class="metric-title">System Uptime</div>
+                        <div class="metric-value" id="system-uptime">99.9%</div>
+                        <div class="metric-change">Target: 99.9%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">📊 Overview</button>
+                <button class="tab" data-tab="genixbank">🏦 GenixBank</button>
+                <button class="tab" data-tab="business">🏢 Business</button>
+                <button class="tab" data-tab="ai-systems">🤖 AI Systems</button>
+                <button class="tab" data-tab="workflows">🔄 Workflows</button>
+                <button class="tab" data-tab="services">⚡ Services</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="chart-container">
+                    <h3 class="chart-title">Ecosystem Performance</h3>
+                    <canvas id="ecosystem-chart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Business Distribution</h3>
+                    <canvas id="business-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- GenixBank Tab -->
+            <div id="genixbank" class="tab-content">
+                <div class="calculator-section">
+                    <div class="calculator-title">
+                        <h3>💰 GenixBank APY Calculator</h3>
+                        <p>Calculate your potential earnings with our high-yield savings account</p>
+                    </div>
+                    
+                    <form class="calculator-form" id="calculatorForm">
+                        <div class="form-group">
+                            <label for="amount">Deposit Amount ($)</label>
+                            <input type="number" id="amount" name="amount" min="100" max="1000000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="months">Time Period (months)</label>
+                            <input type="number" id="months" name="months" min="1" max="60" value="12" required>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate Earnings</button>
+                    </form>
+                    
+                    <div class="result" id="result">
+                        <h4>📊 Your Potential Earnings</h4>
+                        <div class="result-grid" id="resultGrid">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">Financial Verticals</h3>
+                    <div class="verticals-grid">
+                        <div class="vertical-card">
+                            <div class="vertical-icon">💳</div>
+                            <div class="vertical-title">Credit Cards</div>
+                            <div class="vertical-description">Generate premium rewards credit cards with APR management and fraud protection</div>
+                            <button class="generate-btn" onclick="generateVertical('credit')">Generate Credit Card</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">🏦</div>
+                            <div class="vertical-title">Digital Banking</div>
+                            <div class="vertical-description">Build neobanks with checking, savings, transfers, and mobile banking</div>
+                            <button class="generate-btn" onclick="generateVertical('banking')">Generate Banking</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">📈</div>
+                            <div class="vertical-title">Personal Loans</div>
+                            <div class="vertical-description">Create loan marketplaces with rate comparison, pre-approval, and e-signing</div>
+                            <button class="generate-btn" onclick="generateVertical('loans')">Generate Loans</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">🏠</div>
+                            <div class="vertical-title">Mortgages</div>
+                            <div class="vertical-description">Build mortgage pre-approval and closing platforms with document processing</div>
+                            <button class="generate-btn" onclick="generateVertical('mortgage')">Generate Mortgage</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">🛡️</div>
+                            <div class="vertical-title">Insurance</div>
+                            <div class="vertical-description">Create insurance quote and bind platforms for auto, home, and life insurance</div>
+                            <button class="generate-btn" onclick="generateVertical('insurance')">Generate Insurance</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">💰</div>
+                            <div class="vertical-title">Wealth Management</div>
+                            <div class="vertical-description">Build robo-advisors with risk assessment, portfolio optimization, and tax harvesting</div>
+                            <button class="generate-btn" onclick="generateVertical('wealth')">Generate Wealth</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">₿</div>
+                            <div class="vertical-title">Crypto Banking</div>
+                            <div class="vertical-description">Create crypto interest accounts, DeFi platforms, and NFT marketplaces</div>
+                            <button class="generate-btn" onclick="generateVertical('crypto')">Generate Crypto</button>
+                        </div>
+                        
+                        <div class="vertical-card">
+                            <div class="vertical-icon">🔄</div>
+                            <div class="vertical-title">Payments</div>
+                            <div class="vertical-description">Build payment processors, subscription billing, and international payment platforms</div>
+                            <button class="generate-btn" onclick="generateVertical('payments')">Generate Payments</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Tab -->
+            <div id="business" class="tab-content">
+                <div class="chart-container">
+                    <h3 class="chart-title">AI Boss Holdings</h3>
+                    <div id="ai-boss-holdings-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Business Portfolio</h3>
+                    <div id="business-portfolio-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Systems Tab -->
+            <div id="ai-systems" class="tab-content">
+                <div class="chart-container">
+                    <h3 class="chart-title">Agent Swarm Status</h3>
+                    <div id="agent-swarms-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">MCP Servers</h3>
+                    <div id="mcp-servers-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflows Tab -->
+            <div id="workflows" class="tab-content">
+                <div class="chart-container">
+                    <h3 class="chart-title">N8N Workflows</h3>
+                    <div id="n8n-workflows-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Activepieces Automations</h3>
+                    <div id="activepieces-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Tab -->
+            <div id="services" class="tab-content">
+                <div class="chart-container">
+                    <h3 class="chart-title">Service Health</h3>
+                    <div id="service-health-content" class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // IZA OS Unified Dashboard JavaScript
+        class IZAOSUnifiedDashboard {
+            constructor() {
+                this.socket = io();
+                this.charts = {};
+                this.currentTab = 'overview';
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.setupSocketListeners();
+                this.loadInitialData();
+                this.startRealTimeUpdates();
+            }
+            
+            setupEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        this.switchTab(e.target.dataset.tab);
+                    });
+                });
+                
+                // Navigation
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.switchTab(e.target.dataset.tab);
+                    });
+                });
+                
+                // Calculator
+                document.getElementById('calculatorForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.calculateEarnings();
+                });
+            }
+            
+            setupSocketListeners() {
+                this.socket.on('connect', () => {
+                    console.log('Connected to IZA OS Unified Dashboard');
+                    this.showNotification('Connected to IZA OS Unified Dashboard', 'success');
+                });
+                
+                this.socket.on('unified_metrics_update', (data) => {
+                    this.updateMetrics(data);
+                });
+                
+                this.socket.on('genixbank_metrics_update', (data) => {
+                    this.updateGenixBankMetrics(data);
+                });
+                
+                this.socket.on('error', (data) => {
+                    this.showNotification(data.message, 'error');
+                });
+            }
+            
+            switchTab(tabName) {
+                // Update tab buttons
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName).classList.add('active');
+                
+                // Update navigation
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[href="#${tabName}"]`).classList.add('active');
+                
+                this.currentTab = tabName;
+                this.loadTabData(tabName);
+            }
+            
+            loadInitialData() {
+                this.loadUnifiedOverview();
+                this.createCharts();
+            }
+            
+            loadTabData(tabName) {
+                switch(tabName) {
+                    case 'overview':
+                        this.loadUnifiedOverview();
+                        break;
+                    case 'genixbank':
+                        this.loadGenixBankData();
+                        break;
+                    case 'business':
+                        this.loadBusinessData();
+                        break;
+                    case 'ai-systems':
+                        this.loadAISystemsData();
+                        break;
+                    case 'workflows':
+                        this.loadWorkflowsData();
+                        break;
+                    case 'services':
+                        this.loadServicesData();
+                        break;
+                }
+            }
+            
+            async loadUnifiedOverview() {
+                try {
+                    const response = await axios.get('/api/unified/overview');
+                    if (response.data.success) {
+                        this.updateMetrics(response.data.data);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load unified overview', 'error');
+                }
+            }
+            
+            async loadGenixBankData() {
+                try {
+                    const response = await axios.get('/api/genixbank/overview');
+                    if (response.data.success) {
+                        this.updateGenixBankMetrics(response.data.data);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load GenixBank data', 'error');
+                }
+            }
+            
+            async loadBusinessData() {
+                try {
+                    const response = await axios.get('/api/unified/overview');
+                    if (response.data.success) {
+                        this.updateBusinessData(response.data.data.businesses);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load business data', 'error');
+                }
+            }
+            
+            async loadAISystemsData() {
+                try {
+                    const response = await axios.get('/api/unified/overview');
+                    if (response.data.success) {
+                        this.updateAISystemsData(response.data.data.ai_systems);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load AI systems data', 'error');
+                }
+            }
+            
+            async loadWorkflowsData() {
+                try {
+                    const response = await axios.get('/api/unified/overview');
+                    if (response.data.success) {
+                        this.updateWorkflowsData(response.data.data.workflows);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load workflows data', 'error');
+                }
+            }
+            
+            async loadServicesData() {
+                try {
+                    const response = await axios.get('/api/unified/overview');
+                    if (response.data.success) {
+                        this.updateServicesData(response.data.data.services);
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to load services data', 'error');
+                }
+            }
+            
+            async calculateEarnings() {
+                const amount = parseFloat(document.getElementById('amount').value);
+                const months = parseInt(document.getElementById('months').value);
+                
+                try {
+                    const response = await axios.post('/api/genixbank/calculator', {
+                        amount: amount,
+                        months: months
+                    });
+                    
+                    if (response.data.success) {
+                        this.displayResults(response.data.data);
+                    } else {
+                        this.showNotification(response.data.error, 'error');
+                    }
+                } catch (error) {
+                    this.showNotification('Failed to calculate earnings', 'error');
+                }
+            }
+            
+            displayResults(result) {
+                const resultDiv = document.getElementById('result');
+                const resultGrid = document.getElementById('resultGrid');
+                
+                resultGrid.innerHTML = `
+                    <div class="result-item">
+                        <div class="result-value">$${result.deposit_amount.toLocaleString()}</div>
+                        <div class="result-label">Initial Deposit</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">$${result.monthly_earnings.toLocaleString()}</div>
+                        <div class="result-label">Monthly Earnings</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">$${result.total_earnings.toLocaleString()}</div>
+                        <div class="result-label">Total Earnings</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-value">$${result.total_value.toLocaleString()}</div>
+                        <div class="result-label">Final Value</div>
+                    </div>
+                `;
+                
+                resultDiv.classList.add('show');
+            }
+            
+            async generateVertical(verticalType) {
+                const button = event.target;
+                const originalText = button.textContent;
+                
+                try {
+                    button.textContent = 'Generating...';
+                    button.disabled = true;
+                    
+                    const response = await axios.post('/api/genixbank/generate', {
+                        vertical: verticalType
+                    }, {
+                        headers: {
+                            'Authorization': 'Bearer genixbank-unified-token'
+                        }
+                    });
+                    
+                    if (response.data.success) {
+                        button.textContent = 'Generated Successfully!';
+                        button.style.background = '#10B981';
+                        this.showNotification(`${verticalType} platform generated successfully!`, 'success');
+                        
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.disabled = false;
+                            button.style.background = '';
+                        }, 3000);
+                    } else {
+                        throw new Error('Generation failed');
+                    }
+                } catch (error) {
+                    button.textContent = 'Generation Failed';
+                    button.style.background = '#EF4444';
+                    this.showNotification('Generation failed', 'error');
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                        button.style.background = '';
+                    }, 3000);
+                }
+            }
+            
+            updateMetrics(data) {
+                document.getElementById('ecosystem-value').textContent = this.formatCurrency(data.metrics.total_ecosystem_value);
+                document.getElementById('annual-revenue').textContent = this.formatCurrency(data.metrics.annual_recurring_revenue);
+                document.getElementById('total-businesses').textContent = data.metrics.total_businesses;
+                document.getElementById('total-agents').textContent = data.metrics.total_agents;
+                document.getElementById('system-uptime').textContent = data.metrics.uptime_percentage + '%';
+            }
+            
+            updateGenixBankMetrics(data) {
+                // Update GenixBank specific metrics
+                console.log('GenixBank metrics updated:', data);
+            }
+            
+            updateBusinessData(businesses) {
+                const aiBossContent = document.getElementById('ai-boss-holdings-content');
+                aiBossContent.innerHTML = `
+                    <div style="color: white;">
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Total Value:</strong> ${this.formatCurrency(businesses.ai_boss_holdings.total_value)}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Annual Revenue:</strong> ${this.formatCurrency(businesses.ai_boss_holdings.annual_revenue)}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Businesses:</strong> ${businesses.ai_boss_holdings.businesses}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>LLCs:</strong> ${businesses.ai_boss_holdings.llcs}
+                        </div>
+                        <div>
+                            <strong>Automation Level:</strong> ${Math.round(businesses.ai_boss_holdings.automation_level * 100)}%
+                        </div>
+                    </div>
+                `;
+            }
+            
+            updateAISystemsData(aiSystems) {
+                const content = document.getElementById('agent-swarms-content');
+                let html = '<div style="color: white;">';
+                
+                Object.entries(aiSystems.agent_swarms).forEach(([name, swarm]) => {
+                    html += `
+                        <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong>${name.replace(/_/g, ' ').toUpperCase()}</strong>
+                                <span class="status-indicator status-online"></span>
+                            </div>
+                            <div style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">
+                                Agents: ${swarm.agents} | Role: ${swarm.role}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                content.innerHTML = html;
+            }
+            
+            updateWorkflowsData(workflows) {
+                const n8nContent = document.getElementById('n8n-workflows-content');
+                n8nContent.innerHTML = `
+                    <div style="color: white;">
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Total Workflows:</strong> ${workflows.n8n.total_workflows}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Active Workflows:</strong> ${workflows.n8n.active_workflows}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Success Rate:</strong> ${workflows.n8n.success_rate}%
+                        </div>
+                    </div>
+                `;
+                
+                const activepiecesContent = document.getElementById('activepieces-content');
+                activepiecesContent.innerHTML = `
+                    <div style="color: white;">
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Total Automations:</strong> ${workflows.activepieces.total_automations}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Active Automations:</strong> ${workflows.activepieces.active_automations}
+                        </div>
+                        <div>
+                            <strong>Success Rate:</strong> ${workflows.activepieces.success_rate}%
+                        </div>
+                    </div>
+                `;
+            }
+            
+            updateServicesData(services) {
+                const content = document.getElementById('service-health-content');
+                let html = '<div style="color: white;">';
+                
+                Object.entries(services).forEach(([category, serviceGroup]) => {
+                    if (typeof serviceGroup === 'object' && serviceGroup !== null) {
+                        html += `<h4 style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">${category.replace(/_/g, ' ').toUpperCase()}</h4>`;
+                        Object.entries(serviceGroup).forEach(([name, service]) => {
+                            if (typeof service === 'object' && service.status) {
+                                const statusClass = service.status === 'online' ? 'status-online' : 'status-offline';
+                                html += `
+                                    <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 0.25rem;">
+                                        <span class="status-indicator ${statusClass}"></span>
+                                        <strong>${name}</strong> - ${service.status} (${service.response_time}ms)
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                });
+                
+                html += '</div>';
+                content.innerHTML = html;
+            }
+            
+            createCharts() {
+                // Ecosystem Performance Chart
+                const ecosystemCtx = document.getElementById('ecosystem-chart').getContext('2d');
+                this.charts.ecosystem = new Chart(ecosystemCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Ecosystem Value ($B)',
+                            data: [1.2, 1.25, 1.3, 1.35, 1.38, 1.4],
+                            borderColor: 'rgb(34, 197, 94)',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: 'white' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: 'white' },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            },
+                            x: {
+                                ticks: { color: 'white' },
+                                grid: { color: 'rgba(255,255,255,0.1)' }
+                            }
+                        }
+                    }
+                });
+                
+                // Business Distribution Chart
+                const businessCtx = document.getElementById('business-chart').getContext('2d');
+                this.charts.business = new Chart(businessCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['AI & Technology', 'Financial Services', 'E-commerce & Retail', 'Content & Media', 'Healthcare & Wellness', 'Education & Training'],
+                        datasets: [{
+                            data: [95, 78, 65, 58, 42, 44],
+                            backgroundColor: [
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(245, 158, 11, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(236, 72, 153, 0.8)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: 'white' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            startRealTimeUpdates() {
+                // Request updates every 30 seconds
+                setInterval(() => {
+                    this.socket.emit('request_unified_metrics');
+                    this.socket.emit('request_genixbank_metrics');
+                }, 30000);
+            }
+            
+            formatCurrency(value) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(value);
+            }
+            
+            showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        }
+        
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new IZAOSUnifiedDashboard();
+        });
+    </script>
+</body>
+</html>

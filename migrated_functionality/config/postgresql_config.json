@@ -1,0 +1,33 @@
+{
+  "name": "postgresql",
+  "display_name": "Postgresql",
+  "description": "POSTGRESQL MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/postgresql-mcp-server:latest",
+    "port": 5349,
+    "environment": {
+      "SERVER_NAME": "POSTGRESQL",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/postgresql/callback"
+  },
+  "capabilities": [
+    "basic_operations"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "research_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

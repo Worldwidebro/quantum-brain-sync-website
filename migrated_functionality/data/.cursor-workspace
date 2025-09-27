@@ -1,0 +1,474 @@
+# AI AGENT MAESTRO CURSOR WORKSPACE
+## Pre-loaded with Stage-Specific Agent Prompts
+
+This Cursor workspace is pre-configured with all the prompts, configurations, and tools you need to master AI agent orchestration from Stage 0 to Stage 5.
+
+---
+
+## 🎯 WORKSPACE STRUCTURE
+
+```
+ai-agent-maestro/
+├── 📁 stage-0-foundations/
+│   ├── research-assistant.py
+│   ├── web-search-tool.py
+│   └── notion-integration.py
+├── 📁 stage-1-team-lead/
+│   ├── content-factory.py
+│   ├── crewai-setup.py
+│   └── handoff-schemas.py
+├── 📁 stage-2-manager/
+│   ├── onboarding-swarm.py
+│   ├── autogen-setup.py
+│   └── temporal-workflows.py
+├── 📁 stage-3-director/
+│   ├── saas-launcher.py
+│   ├── smythos-setup.py
+│   └── monitoring-dashboards.py
+├── 📁 stage-4-maestro/
+│   ├── ceo-agent-hierarchy.py
+│   ├── meta-orchestration.py
+│   └── self-improvement.py
+├── 📁 stage-5-god-mode/
+│   ├── self-evolving-startup.py
+│   ├── openagents-setup.py
+│   └── research-framework.py
+├── 📁 templates/
+│   ├── agent-configs.json
+│   ├── prompt-templates.md
+│   └── monitoring-setup.py
+└── 📄 README.md
+```
+
+---
+
+## 🤖 STAGE-SPECIFIC PROMPTS
+
+### **// [STAGE:0] Research Assistant**
+```
+Generate a LangChain agent that:
+1. Accepts a topic (e.g., 'best AI frameworks 2025')
+2. Searches the web (Google Search API)
+3. Summarizes top 5 results
+4. Saves to Notion (Notion API)
+5. Formats as markdown with sources
+
+Output: Full TypeScript code with error handling, token tracking, and retry logic.
+```
+
+### **// [STAGE:1] Content Factory**
+```
+Build a CrewAI content factory with:
+- Researcher: finds 5 sources on topic
+- Writer: drafts 800-word blog
+- Editor: fixes grammar, adds headers
+- Publisher: posts to WordPress/Notion
+- Promoter: generates 3 tweets
+
+Include handoff schemas and memory persistence.
+```
+
+### **// [STAGE:2] Onboarding Swarm**
+```
+Create AutoGen customer onboarding swarm:
+1. Collect email → 2. Send welcome → 3. Check payment → 4. Create account → 5. Notify team
+If payment fails → retry 3x → escalate to human
+Log all steps to Langfuse with monitoring
+```
+
+### **// [STAGE:3] SaaS Launcher**
+```
+Build SmythOS SaaS MVP launcher:
+- Design Team (Zoe → Diana) → Eng Team (Devin → Claire) → QA (Test Roy) → Growth (Jasper → Loop)
+- Monitor via Langfuse + Grafana
+- Auto-escalate if error rate > 5% or cost > $100/day
+```
+
+### **// [STAGE:4] CEO Agent**
+```
+Create CEO agent hierarchy:
+- CEO Agent → delegates to CTO, CMO, CFO
+- CTO → manages 50 eng agents → Devin → Smol → Claire
+- Monthly: auto-generate P&L, audit compliance, optimize spend
+- Human only sets vision + budget
+```
+
+### **// [STAGE:5] Self-Evolving Startup**
+```
+Build self-evolving startup:
+- Agents propose new product ideas → debate → prototype → launch → measure → iterate
+- Budget: $10K/mo (simulated)
+- Goal: 10% MoM growth in 'revenue' (simulated)
+- Human only observes
+```
+
+---
+
+## 🛠️ CONFIGURATION TEMPLATES
+
+### **Agent Configuration (agent-configs.json)**
+```json
+{
+  "stage_0": {
+    "agent": {
+      "name": "ResearchAssistant",
+      "model": "gpt-4o",
+      "temperature": 0.7,
+      "max_tokens": 2000,
+      "tools": ["web_search", "save_to_notion", "format_markdown"]
+    },
+    "tools": {
+      "web_search": {
+        "api_key": "${GOOGLE_API_KEY}",
+        "search_engine_id": "${GOOGLE_SEARCH_ENGINE_ID}",
+        "max_results": 5
+      },
+      "notion": {
+        "token": "${NOTION_TOKEN}",
+        "database_id": "${NOTION_DATABASE_ID}"
+      }
+    }
+  },
+  "stage_1": {
+    "crew": {
+      "agents": [
+        {"role": "researcher", "goal": "Find comprehensive sources"},
+        {"role": "writer", "goal": "Create engaging content"},
+        {"role": "editor", "goal": "Improve content quality"},
+        {"role": "publisher", "goal": "Publish content"},
+        {"role": "promoter", "goal": "Generate social media content"}
+      ],
+      "process": "sequential",
+      "memory": true
+    }
+  },
+  "stage_2": {
+    "autogen": {
+      "config_list": [{"model": "gpt-4", "api_key": "${OPENAI_API_KEY}"}],
+      "workflow": {
+        "nodes": ["collect_email", "send_welcome", "check_payment", "create_account", "notify_team"],
+        "edges": ["collect_email->send_welcome", "send_welcome->check_payment"],
+        "conditions": {
+          "check_payment": {
+            "success": "create_account",
+            "failure": "human_escalation"
+          }
+        }
+      }
+    }
+  },
+  "stage_3": {
+    "smythos": {
+      "swarms": {
+        "design_team": {
+          "agents": ["Zoe", "Diana"],
+          "max_cost": 100,
+          "auto_heal": true
+        },
+        "engineering_team": {
+          "agents": ["Devin", "Claire"],
+          "max_cost": 200,
+          "auto_heal": true
+        }
+      },
+      "monitoring": {
+        "langfuse": true,
+        "grafana": true,
+        "alerts": {
+          "error_rate": 0.05,
+          "daily_cost": 100
+        }
+      }
+    }
+  },
+  "stage_4": {
+    "meta_orchestration": {
+      "ceo_agent": {
+        "role": "Chief Executive Officer",
+        "subordinates": ["cto_agent", "cmo_agent", "cfo_agent"]
+      },
+      "cto_agent": {
+        "role": "Chief Technology Officer",
+        "subordinates": ["devin_swarm", "aider_swarm", "claire_swarm"]
+      },
+      "learning_system": {
+        "monthly_assessment": true,
+        "continuous_learning": true,
+        "self_improvement": true
+      }
+    }
+  },
+  "stage_5": {
+    "self_evolving": {
+      "innovation_swarm": {
+        "agents": ["IdeaGenerator", "MarketAnalyzer", "PrototypeBuilder", "LaunchManager", "MetricsAnalyzer"]
+      },
+      "economic_swarm": {
+        "agents": ["BudgetOptimizer", "RevenueMaximizer", "CostMinimizer", "InvestmentAnalyzer"]
+      },
+      "governance_swarm": {
+        "agents": ["EthicsMonitor", "ComplianceAgent", "RiskAssessment", "SafetyGuard"]
+      }
+    }
+  }
+}
+```
+
+### **Environment Variables (.env)**
+```bash
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Google Search API
+GOOGLE_API_KEY=your_google_api_key_here
+GOOGLE_SEARCH_ENGINE_ID=your_search_engine_id_here
+
+# Notion API
+NOTION_TOKEN=your_notion_token_here
+NOTION_DATABASE_ID=your_database_id_here
+
+# Monitoring
+LANGFUSE_PUBLIC_KEY=your_langfuse_public_key_here
+LANGFUSE_SECRET_KEY=your_langfuse_secret_key_here
+GRAFANA_API_KEY=your_grafana_api_key_here
+
+# Database
+REDIS_URL=your_redis_url_here
+CHROMA_DB_PATH=./chroma_db
+
+# Cost Tracking
+DAILY_COST_LIMIT=100
+MONTHLY_COST_LIMIT=3000
+ALERT_THRESHOLD=1000
+```
+
+---
+
+## 🧪 TESTING FRAMEWORK
+
+### **Test Prompts**
+```
+// [TEST] Stage 0 Research Assistant
+Test the research assistant with:
+- Valid topic: "AI frameworks 2025"
+- Invalid topic: ""
+- Network error simulation
+- Rate limit testing
+- Notion API error handling
+
+// [TEST] Stage 1 Content Factory
+Test the content factory with:
+- Valid topic input
+- Invalid topic input
+- Agent handoff failures
+- Memory persistence
+- Output quality validation
+
+// [TEST] Stage 2 Onboarding Swarm
+Test the onboarding swarm with:
+- Valid customer data
+- Invalid email addresses
+- Payment failures
+- Network timeouts
+- Human escalation triggers
+
+// [TEST] Stage 3 SaaS Launcher
+Test the SaaS launcher with:
+- Valid product specification
+- Invalid specifications
+- Agent failures
+- Cost limit breaches
+- Error rate thresholds
+
+// [TEST] Stage 4 CEO Agent
+Test the CEO agent with:
+- Valid business vision
+- Invalid vision statements
+- Subordinate agent failures
+- Learning system triggers
+- Self-improvement cycles
+
+// [TEST] Stage 5 Self-Evolving Startup
+Test the self-evolving startup with:
+- Valid budget constraints
+- Invalid constraints
+- Innovation cycle failures
+- Economic optimization
+- Governance compliance
+```
+
+---
+
+## 📊 MONITORING SETUP
+
+### **Monitoring Configuration**
+```python
+# monitoring-setup.py
+import langfuse
+import grafana_api
+from prometheus_client import start_http_server, Counter, Histogram
+
+class AgentMonitoring:
+    def __init__(self):
+        self.langfuse = langfuse.Langfuse(
+            public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
+            secret_key=os.getenv("LANGFUSE_SECRET_KEY")
+        )
+        self.grafana = grafana_api.GrafanaApi(
+            auth=os.getenv("GRAFANA_API_KEY")
+        )
+        
+        # Prometheus metrics
+        self.request_count = Counter('agent_requests_total', 'Total agent requests')
+        self.request_duration = Histogram('agent_request_duration_seconds', 'Agent request duration')
+        self.error_count = Counter('agent_errors_total', 'Total agent errors')
+        self.cost_tracker = Counter('agent_cost_total', 'Total agent costs')
+    
+    def track_request(self, agent_name: str, duration: float, cost: float, success: bool):
+        """Track agent request metrics"""
+        self.request_count.labels(agent=agent_name).inc()
+        self.request_duration.labels(agent=agent_name).observe(duration)
+        self.cost_tracker.labels(agent=agent_name).inc(cost)
+        
+        if not success:
+            self.error_count.labels(agent=agent_name).inc()
+        
+        # Log to Langfuse
+        self.langfuse.log_event("agent_request", {
+            "agent": agent_name,
+            "duration": duration,
+            "cost": cost,
+            "success": success
+        })
+    
+    def setup_grafana_dashboard(self):
+        """Set up Grafana dashboard for agent monitoring"""
+        dashboard = {
+            "dashboard": {
+                "title": "AI Agent Maestro Dashboard",
+                "panels": [
+                    {
+                        "title": "Request Rate",
+                        "type": "graph",
+                        "targets": [
+                            {
+                                "expr": "rate(agent_requests_total[5m])",
+                                "legendFormat": "{{agent}}"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Error Rate",
+                        "type": "graph",
+                        "targets": [
+                            {
+                                "expr": "rate(agent_errors_total[5m])",
+                                "legendFormat": "{{agent}}"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Cost Tracking",
+                        "type": "graph",
+                        "targets": [
+                            {
+                                "expr": "rate(agent_cost_total[1h])",
+                                "legendFormat": "{{agent}}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        
+        self.grafana.dashboard.create_dashboard(dashboard)
+```
+
+---
+
+## 🎯 QUICK START GUIDE
+
+### **1. Setup Environment**
+```bash
+# Clone workspace
+git clone https://github.com/Worldwidebro/ai-agent-maestro-os.git
+cd ai-agent-maestro-os
+
+# Install dependencies
+pip install -r requirements.txt
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+### **2. Start with Stage 0**
+```bash
+cd stage-0-foundations
+python research-assistant.py
+```
+
+### **3. Use Cursor Prompts**
+- Open Cursor IDE
+- Use `⌘K` to open AI commands
+- Paste stage-specific prompts
+- Follow the generated code
+
+### **4. Monitor Progress**
+- Check monitoring dashboard
+- Track token usage and costs
+- Monitor error rates
+- Review performance metrics
+
+---
+
+## 🚀 ADVANCED FEATURES
+
+### **Custom Agent Templates**
+```
+// [CUSTOM] Create Custom Agent
+Generate a custom agent with:
+- Specific role and capabilities
+- Custom tools and integrations
+- Performance monitoring
+- Error handling
+- Cost optimization
+```
+
+### **Performance Optimization**
+```
+// [OPTIMIZE] Agent Performance
+Optimize agent performance by:
+- Reducing token usage
+- Improving response times
+- Minimizing API calls
+- Implementing caching
+- Adding retry logic
+```
+
+### **Security Hardening**
+```
+// [SECURITY] Agent Security
+Harden agent security with:
+- Input validation
+- Output sanitization
+- Rate limiting
+- Access controls
+- Audit logging
+```
+
+---
+
+## 📚 RESOURCES
+
+- **LangChain Documentation:** https://python.langchain.com/
+- **CrewAI Documentation:** https://docs.crewai.com/
+- **AutoGen Documentation:** https://microsoft.github.io/autogen/
+- **SmythOS Documentation:** https://docs.smythos.com/
+- **Langfuse Documentation:** https://langfuse.com/docs
+
+---
+
+**Ready to start your AI Agent Maestro journey? Open Cursor and begin with Stage 0!** 🚀

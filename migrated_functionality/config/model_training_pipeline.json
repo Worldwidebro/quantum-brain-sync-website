@@ -1,0 +1,37 @@
+{
+  "name": "model_training_pipeline",
+  "data_source": "notion_workspace",
+  "preprocessing_steps": [
+    "data_cleaning",
+    "tokenization",
+    "vectorization",
+    "quality_check"
+  ],
+  "model_training": {
+    "framework": "transformers",
+    "base_model": "llama3.1:8b",
+    "fine_tuning_method": "lora",
+    "training_data": "venture_studio_tasks",
+    "validation_split": 0.2
+  },
+  "deployment_config": {
+    "platform": "ollama",
+    "scaling": "auto",
+    "endpoints": [
+      "/api/chat",
+      "/api/generate"
+    ],
+    "monitoring": true
+  },
+  "monitoring_metrics": [
+    "accuracy",
+    "latency",
+    "throughput",
+    "cost"
+  ],
+  "retraining_triggers": [
+    "accuracy_drop",
+    "new_data",
+    "performance_degradation"
+  ]
+}

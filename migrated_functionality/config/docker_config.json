@@ -1,0 +1,33 @@
+{
+  "name": "docker",
+  "display_name": "Docker",
+  "description": "DOCKER MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/docker-mcp-server:latest",
+    "port": 5010,
+    "environment": {
+      "SERVER_NAME": "DOCKER",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/docker/callback"
+  },
+  "capabilities": [
+    "basic_operations"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "research_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "google_cloud",
+  "display_name": "Google_Cloud",
+  "description": "GOOGLE_CLOUD MCP server for IZA OS ecosystem",
+  "deployment": {
+    "type": "docker",
+    "image": "ghcr.io/klavis-ai/google_cloud-mcp-server:latest",
+    "port": 5812,
+    "environment": {
+      "SERVER_NAME": "GOOGLE_CLOUD",
+      "IZA_OS_INTEGRATION": "true",
+      "LOG_LEVEL": "info"
+    }
+  },
+  "oauth": {
+    "enabled": true,
+    "scopes": [
+      "read",
+      "write"
+    ],
+    "redirect_uri": "https://iza-os.com/oauth/google_cloud/callback"
+  },
+  "capabilities": [
+    "basic_operations"
+  ],
+  "iza_os_integration": {
+    "agent_access": [
+      "research_agent"
+    ],
+    "workflow_integration": true,
+    "monitoring_enabled": true
+  }
+}
